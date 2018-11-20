@@ -24,7 +24,7 @@ Configuration
 To configure authentication settings set following attributes in the
 `ApiSettings` class:
 
-    from xyt import ApiSettings
+    from xythub import ApiSettings
 
     ApiSettings.user_id = USERNAME
     ApiSettings.user_password = PASSWORD
@@ -62,7 +62,7 @@ Browsing data catalogue
 
 Listing of available sources:
 
-    from xyt import lookup_sources
+    from xythub import lookup_sources
 
     sources = lookup_sources()
 
@@ -78,7 +78,7 @@ Listing of available sources:
 
 Listing all available exchanges:
 
-    from xyt import lookup_exchanges
+    from xythub import lookup_exchanges
 
     exchanges = lookup_exchanges(source='ACTIV')
 
@@ -111,14 +111,14 @@ Listing all available exchanges:
 
 Looking up symbols on given data source by pattern:
 
-    from xyt import lookup_symbols
+    from xythub import lookup_symbols
 
     symbols = lookup_symbols(source='ACTIV', pattern='apple')
 
 
 Looking up symbols on given data source by pattern and dates range:
 
-    from xyt import lookup_symbols
+    from xythub import lookup_symbols
 
     symbols = lookup_symbols(source='ACTIV', pattern='apple',
                              first_day='2016.01.01', last_day='2016.12.31')
@@ -126,7 +126,7 @@ Looking up symbols on given data source by pattern and dates range:
 
 Looking symbols on given data source:
 
-    from xyt import lookup_symbols
+    from xythub import lookup_symbols
 
     symbols = lookup_symbols(source='ACTIV')
 
@@ -135,7 +135,7 @@ Looking symbols on given data source:
 
 More advanced search limiting to specific exchanges on the data source and specific item type:
 
-    from xyt import lookup_symbols, ItemType
+    from xythub import lookup_symbols, ItemType
 
     symbols = lookup_symbols(source='ACTIV', pattern='zal', exchange_filters=['XETRA', 'BXTR'],
                              first_day='2016.01.01', last_day='2016.12.31',
@@ -195,7 +195,7 @@ For best performance: narrow search criteria using pattern, filters and dates.
 
 Retrieving all items matching the pattern 'post' and iterating over search result using paging window of 100 elements:
 
-    from xyt import lookup_symbols
+    from xythub import lookup_symbols
 
     search_criteria = dict(source='ACTIV, pattern='post', page_limit=100)
     partial_result = lookup_symbols(**search_criteria)
@@ -224,7 +224,7 @@ Retrieves tick data (trades, quote, trades and quotes) for given symbol and filt
 
 Retrieving all trades (including non-regular) with trade corrections applied:
 
-    from xyt import tick_data, TickDataType, TickDataFlag
+    from xythub import tick_data, TickDataType, TickDataFlag
 
     td = tick_data(source='ACTIV', symbol='ZAL.XE', day='2016.05.05',
                    data_type=TickDataType.TRADES,
@@ -235,7 +235,7 @@ Retrieving all trades (including non-regular) with trade corrections applied:
 
 Retrieving quotes:
 
-    from xyt import tick_data, TickDataType, TickDataFlag
+    from xythub import tick_data, TickDataType, TickDataFlag
 
     td=tick_data(source='ACTIV', symbol='ZAL.XE', day='2016.05.05',
                  data_type=TickDataType.QUOTES,
@@ -244,7 +244,7 @@ Retrieving quotes:
 
 Retrieving trades and quotes in one call:
 
-    from xyt import tick_data, TickDataType, TickDataFlag
+    from xythub import tick_data, TickDataType, TickDataFlag
 
     td = tick_data(source='ACTIV', symbol='ZAL.XE', day='2016.05.05',
                    data_type=TickDataType.TRADES_AND_QUOTES,
@@ -308,7 +308,7 @@ In case there was no ticks in the market, the result still contains given bin wi
 
 Retrieving hourly aggregated trades:
 
-    from xyt import tick_aggregated, TickDataType, TickDataFlag
+    from xythub import tick_aggregated, TickDataType, TickDataFlag
 
     td = tick_aggregated(source='ACTIV', symbol='CL/17U.NXG', day='2017.08.16',
                          bin_size=3600, # hourly
@@ -319,7 +319,7 @@ Retrieving hourly aggregated trades:
 
 Retrieving quotes aggregated in 15 minute intervals:
 
-    from xyt import tick_aggregated, TickDataType, TickDataFlag
+    from xythub import tick_aggregated, TickDataType, TickDataFlag
 
     td = tick_aggregated(source='ACTIV', symbol='CL/17U.NXG', day='2017.08.16',
                          bin_size=900, # 15 minutes
@@ -328,7 +328,7 @@ Retrieving quotes aggregated in 15 minute intervals:
 
 Retrieving trades and quotes in one minute bins:
 
-    from xyt import tick_aggregated, TickDataType, TickDataFlag
+    from xythub import tick_aggregated, TickDataType, TickDataFlag
 
     td = tick_aggregated(source='ACTIV', symbol='CL/17U.NXG', day='2017.08.16',
                          data_type=TickDataType.TRADES_AND_QUOTES)
@@ -375,7 +375,7 @@ Retrieves snapshot of tick data (trades, quote, trades and quotes) for given sym
 
 Retrieving trade snapshot at 12:00:00.00:
 
-    from xyt import tick_snapshot, TickDataType, TickDataFlag
+    from xythub import tick_snapshot, TickDataType, TickDataFlag
 
     td = tick_snapshot(source='ACTIV', symbols=['CL/17U.NXG'], day='2017.08.16',
                        data_type=TickDataType.TRADES,
@@ -385,7 +385,7 @@ Retrieving trade snapshot at 12:00:00.00:
 
 Retrieving quote snapshot at 09:15:00:
 
-    from xyt import tick_snapshot, TickDataType, TickDataFlag
+    from xythub import tick_snapshot, TickDataType, TickDataFlag
 
     td = tick_snapshot(source='ACTIV', symbols=['CL/17U.NXG'], day='2017.08.16',
                        data_type=TickDataType.QUOTES,
@@ -394,7 +394,7 @@ Retrieving quote snapshot at 09:15:00:
 
 Retrieving trade and quote snapshot at 10:03:00:
 
-    from xyt import tick_snapshot, TickDataType, TickDataFlag
+    from xythub import tick_snapshot, TickDataType, TickDataFlag
 
     td = tick_snapshot(source='ACTIV', symbols=['CL/17U.NXG'], day='2017.08.16',
                        data_type=TickDataType.TRADES_AND_QUOTES,
@@ -435,7 +435,7 @@ Available Type and Flag values - as described [here](lib_python.html#input-param
 
 Retrieving orders:
 
-    from xyt import order_data
+    from xythub import order_data
 
     orders = order_data(source='ACTIV', symbols=['DBK.XE'], day='2016.10.04',
                         from_time='09:00:00.000', to_time='09:01:30.000')
@@ -470,7 +470,7 @@ Retrieving orders:
 
 Retrieving orders:
 
-    from xyt import auction_data
+    from xythub import auction_data
 
     auctions = auction_data(source='ACTIV', symbols=['DBK.XE'], day='2016.10.04')
 
@@ -510,7 +510,7 @@ Retrieving orders:
 
 Retrieving end of day data:
 
-    from xyt import end_of_day
+    from xythub import end_of_day
 
     eod = end_of_day(source='ACTIV', symbols=['DBK.XE'], first_day='2016.09.01', last_day='2017.08.02')
 
@@ -542,7 +542,7 @@ Retrieving end of day data:
 
 Retrieving settlement prices for given list of derivative symbols:
 
-    from xyt import settlement_prices
+    from xythub import settlement_prices
 
     prices = settlement_prices(source='ACTIV', symbols=['DBK.XE'],
                                first_day='2016.10.04', last_day='2016.11.04')
@@ -579,7 +579,7 @@ Retrieving reference data
 Retrieves reference data for given symbols and date.
 Note searching by pattern and retrieval of basing reference data is possible via `lookup_symbols` function.
 
-    from xyt import reference_data
+    from xythub import reference_data
 
     reference = reference_data(source='ACTIV', symbols=['DBK.XE'], day='2016.09.01')
 
@@ -671,7 +671,7 @@ Additional columns available for options:
 
 Retrieving instrument status:
 
-    from xyt import instrument_status
+    from xythub import instrument_status
 
     status = instrument_status(source='ACTIV', symbols=['DBK.XE', 'ADS.XE'], day='2016.09.02')
 
@@ -700,7 +700,7 @@ Retrieving instrument status:
 
 Retrieving tick rules:
 
-    from xyt import tick_rules
+    from xythub import tick_rules
 
     rules = tick_rules(source='ACTIV', symbols=['DBK.XE'], day='2016.09.02')
 
@@ -729,7 +729,7 @@ Retrieves option or future chain for given chain identifier (either option stem 
 
 Retrieving option chain:
 
-    from xyt import chain, ChainType
+    from xythub import chain, ChainType
 
     chains = chain(source='ACTIV', exchange='OPRA_COMPOSITE',
                    symbol='=DJX.W', day='2016.09.02',
@@ -738,7 +738,7 @@ Retrieving option chain:
 
 Retrieving future chain:
 
-    from xyt import chain, ChainType
+    from xythub import chain, ChainType
 
     chains = chain(source='ACTIV', exchange='NYMEX',
                    symbol='CL', day='2016.09.02',
@@ -747,7 +747,7 @@ Retrieving future chain:
 
 Retrieving future option chain:
 
-    from xyt import chain, ChainType
+    from xythub import chain, ChainType
 
     chains = chain(source='ACTIV', exchange='NYMEX',
                    symbol='CL', day='2016.09.02',
