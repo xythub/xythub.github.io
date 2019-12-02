@@ -197,7 +197,7 @@ Retrieving all items matching the pattern 'post' and iterating over search resul
 
     from xythub import lookup_symbols
 
-    search_criteria = dict(source='ACTIV, pattern='post', page_limit=100)
+    search_criteria = dict(source='ACTIV', pattern='post', page_limit=100)
     partial_result = lookup_symbols(**search_criteria)
     print('Total hits matching search criteria %s: %s' % (search_criteria, partial_result.total_hits))
     total = partial_result.total_hits
