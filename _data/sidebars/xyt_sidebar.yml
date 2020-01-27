@@ -24,6 +24,13 @@ entries:
       url: /lib_r.html
       output: web
 
+  - title: LC API documentation
+    output: web
+    folderitems:
+    - title: LC API Python
+      url: /lib_lc_api_python.html
+      output: web
+
   - title: REST API reference
     output: web
 
