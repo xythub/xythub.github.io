@@ -21,13 +21,14 @@ This library requires Python 2.7 or 3.0+ to run.
 Configuration
 -------------
 
-To configure authentication settings set following attributes in the
-`ApiSettings` class:
+To configure authentication settings set following attributes in the `ApiSettings` class:
 
-    from xythub import ApiSettings
+```python
+from xythub import ApiSettings
 
-    ApiSettings.user_id = USERNAME
-    ApiSettings.user_password = PASSWORD
+ApiSettings.user_id = USERNAME
+ApiSettings.user_password = PASSWORD
+```
 
 
 Data representation
@@ -50,9 +51,11 @@ Due to [technical limitations of NumPy](http://pandas.pydata.org/pandas-docs/sta
 
 If required this can be replaced to `NaN` (with column type promotion):
 
-    import numpy as np
+```python
+import numpy as np
 
-    data.to_pandas().replace(-9223372036854775808, np.nan).to_csv(index=False)
+data.to_pandas().replace(-9223372036854775808, np.nan).to_csv(index=False)
+```
 
 
 Browsing data catalogue
@@ -62,10 +65,11 @@ Browsing data catalogue
 
 Listing of available sources:
 
-    from xythub import lookup_sources
+```python
+from xythub import lookup_sources
 
-    sources = lookup_sources()
-
+sources = lookup_sources()
+```
 
 #### Output columns
 
@@ -78,10 +82,11 @@ Listing of available sources:
 
 Listing all available exchanges:
 
-    from xythub import lookup_exchanges
+```python
+from xythub import lookup_exchanges
 
-    exchanges = lookup_exchanges(source='ACTIV')
-
+exchanges = lookup_exchanges(source='ACTIV')
+```
 
 #### Input parameters
 
@@ -111,36 +116,39 @@ Listing all available exchanges:
 
 Looking up symbols on given data source by pattern:
 
-    from xythub import lookup_symbols
+```python
+from xythub import lookup_symbols
 
-    symbols = lookup_symbols(source='ACTIV', pattern='apple')
-
+symbols = lookup_symbols(source='ACTIV', pattern='apple')
+```
 
 Looking up symbols on given data source by pattern and dates range:
 
-    from xythub import lookup_symbols
+```python
+from xythub import lookup_symbols
 
-    symbols = lookup_symbols(source='ACTIV', pattern='apple',
-                             first_day='2016.01.01', last_day='2016.12.31')
-
+symbols = lookup_symbols(source='ACTIV', pattern='apple',
+                         first_day='2016.01.01', last_day='2016.12.31')
+```
 
 Looking symbols on given data source:
 
-    from xythub import lookup_symbols
+```python
+from xythub import lookup_symbols
 
-    symbols = lookup_symbols(source='ACTIV')
-
+symbols = lookup_symbols(source='ACTIV')
+```
 
 #### Advanced searching
 
 More advanced search limiting to specific exchanges on the data source and specific item type:
 
-    from xythub import lookup_symbols, ItemType
+```python
+from xythub import lookup_symbols
 
-    symbols = lookup_symbols(source='ACTIV', pattern='zal', exchange_filters=['XETRA', 'BXTR'],
-                             first_day='2016.01.01', last_day='2016.12.31',
-                             item_type_filters=[ItemType.INDIVIDUAL_ITEM])
-
+symbols = lookup_symbols(source='ACTIV', pattern='zal', exchange_filters=['XETRA', 'BXTR'],
+                         first_day='2016.01.01', last_day='2016.12.31')
+```
 
 #### Input parameters
 
@@ -151,8 +159,6 @@ More advanced search limiting to specific exchanges on the data source and speci
 | exchange_filters       | [string]               |           | Narrow lookup to one or more exchange names.     |
 | region_filters         | [string]               |           | Narrow lookup to one or more region names.       |
 | entity_class_filters   | [string]               |           | Narrow lookup to one or more entities.           |
-| product_type_filters   | [ProductType]          |           | Narrow lookup to one or more product types.      |
-| item_type_filters      | [ItemType]             |           | Narrow lookup to one or more item types.         |
 | first_day              | pd.Timestamp / string  |           | First day that should be taken into account.     |
 | last_day               | pd.Timestamp / string  |           | Last day that should be taken into account.      |
 | page_limit             | int                    |           | Size of the paging window.                       |
@@ -173,7 +179,6 @@ More advanced search limiting to specific exchanges on the data source and speci
 | currency         | string         | Item currency.             |
 | market_segment   | string         | Market segment.            |
 | entity_class     | string         | Entity class.              |
-| item_type        | ItemType       | Item type.                 |
 | first_day        | pd.Timestamp   | First available day.       |
 | last_day         | pd.Timestamp   | Last available day.        |
 
@@ -195,25 +200,26 @@ For best performance: narrow search criteria using pattern, filters and dates.
 
 Retrieving all items matching the pattern 'post' and iterating over search result using paging window of 100 elements:
 
-    from xythub import lookup_symbols
+```python
+from xythub import lookup_symbols
 
-    search_criteria = dict(source='ACTIV', pattern='post', page_limit=100)
-    partial_result = lookup_symbols(**search_criteria)
-    print('Total hits matching search criteria %s: %s' % (search_criteria, partial_result.total_hits))
-    total = partial_result.total_hits
-    rows = partial_result.rows
-    cursor = partial_result.cursor
+search_criteria = dict(source='ACTIV', pattern='post', page_limit=100)
+partial_result = lookup_symbols(**search_criteria)
+print('Total hits matching search criteria %s: %s' % (search_criteria, partial_result.total_hits))
+total = partial_result.total_hits
+rows = partial_result.rows
+cursor = partial_result.cursor
 
-    while (partial_result.cursor):
-        print('%.2f%%  %s' % ((rows / total) * 100, cursor))
-        partial_result = lookup_symbols(cursor=cursor, **search_criteria)
-        rows += partial_result.rows
+while (partial_result.cursor):
+    print('%.2f%%  %s' % ((rows / total) * 100, cursor))
+    partial_result = lookup_symbols(cursor=cursor, **search_criteria)
+    rows += partial_result.rows
 
-        if cursor == partial_result.cursor:
-            break
-        else:
-            cursor = partial_result.cursor
-
+    if cursor == partial_result.cursor:
+        break
+    else:
+        cursor = partial_result.cursor
+```
 
 Retrieving price data
 ---------------------
@@ -224,34 +230,37 @@ Retrieves tick data (trades, quote, trades and quotes) for given symbol and filt
 
 Retrieving all trades (including non-regular) with trade corrections applied:
 
-    from xythub import tick_data, TickDataType, TickDataFlag
+```python
+from xythub import tick_data, TickDataType, TickDataFlag
 
-    td = tick_data(source='ACTIV', symbol='ZAL.XE', day='2016.05.05',
-                   data_type=TickDataType.TRADES,
-                   from_time='09:00:00.000', to_time='09:10:09.999',
-                   flags=[TickDataFlag.INCLUDE_NON_REGULAR,
-                          TickDataFlag.INCLUDE_TRADE_CONDITION_INFO])
-
+td = tick_data(source='ACTIV', symbol='ZAL.XE', day='2016.05.05',
+               data_type=TickDataType.TRADES,
+               from_time='09:00:00.000', to_time='09:10:09.999',
+               flags=[TickDataFlag.INCLUDE_NON_REGULAR,
+                      TickDataFlag.INCLUDE_TRADE_CONDITION_INFO])
+```
 
 Retrieving quotes:
 
-    from xythub import tick_data, TickDataType, TickDataFlag
+```python
+from xythub import tick_data, TickDataType, TickDataFlag
 
-    td=tick_data(source='ACTIV', symbol='ZAL.XE', day='2016.05.05',
-                 data_type=TickDataType.QUOTES,
-                 from_time='09:00:00.000', to_time='09:10:09.999')
-
+td=tick_data(source='ACTIV', symbol='ZAL.XE', day='2016.05.05',
+             data_type=TickDataType.QUOTES,
+             from_time='09:00:00.000', to_time='09:10:09.999')
+```
 
 Retrieving trades and quotes in one call:
 
-    from xythub import tick_data, TickDataType, TickDataFlag
+```python
+from xythub import tick_data, TickDataType, TickDataFlag
 
-    td = tick_data(source='ACTIV', symbol='ZAL.XE', day='2016.05.05',
-                   data_type=TickDataType.TRADES_AND_QUOTES,
-                   from_time='09:00:00.000', to_time='09:02:00.000',
-                   flags=[TickDataFlag.INCLUDE_NON_REGULAR,
-                          TickDataFlag.INCLUDE_TRADE_CONDITION_INFO])
-
+td = tick_data(source='ACTIV', symbol='ZAL.XE', day='2016.05.05',
+               data_type=TickDataType.TRADES_AND_QUOTES,
+               from_time='09:00:00.000', to_time='09:02:00.000',
+               flags=[TickDataFlag.INCLUDE_NON_REGULAR,
+                      TickDataFlag.INCLUDE_TRADE_CONDITION_INFO])
+```
 
 #### Input parameters
 
@@ -308,31 +317,34 @@ In case there was no ticks in the market, the result still contains given bin wi
 
 Retrieving hourly aggregated trades:
 
-    from xythub import tick_aggregated, TickDataType, TickDataFlag
+```python
+from xythub import tick_aggregated, TickDataType, TickDataFlag
 
-    td = tick_aggregated(source='ACTIV', symbol='CL/17U.NXG', day='2017.08.16',
-                         bin_size=3600, # hourly
-                         data_type=TickDataType.TRADES,
-                         flags=[TickDataFlag.INCLUDE_NON_REGULAR,
-                                TickDataFlag.USE_MARKET_TS])
-
+td = tick_aggregated(source='ACTIV', symbol='CL/17U.NXG', day='2017.08.16',
+                     bin_size=3600, # hourly
+                     data_type=TickDataType.TRADES,
+                     flags=[TickDataFlag.INCLUDE_NON_REGULAR,
+                            TickDataFlag.USE_MARKET_TS])
+```
 
 Retrieving quotes aggregated in 15 minute intervals:
 
-    from xythub import tick_aggregated, TickDataType, TickDataFlag
+```python
+from xythub import tick_aggregated, TickDataType, TickDataFlag
 
-    td = tick_aggregated(source='ACTIV', symbol='CL/17U.NXG', day='2017.08.16',
-                         bin_size=900, # 15 minutes
-                         data_type=TickDataType.QUOTES, flags=[])
-
+td = tick_aggregated(source='ACTIV', symbol='CL/17U.NXG', day='2017.08.16',
+                     bin_size=900, # 15 minutes
+                     data_type=TickDataType.QUOTES, flags=[])
+```
 
 Retrieving trades and quotes in one minute bins:
 
-    from xythub import tick_aggregated, TickDataType, TickDataFlag
+```python
+from xythub import tick_aggregated, TickDataType, TickDataFlag
 
-    td = tick_aggregated(source='ACTIV', symbol='CL/17U.NXG', day='2017.08.16',
-                         data_type=TickDataType.TRADES_AND_QUOTES)
-
+td = tick_aggregated(source='ACTIV', symbol='CL/17U.NXG', day='2017.08.16',
+                     data_type=TickDataType.TRADES_AND_QUOTES)
+```
 
 #### Input parameters
 
@@ -375,32 +387,38 @@ Retrieves snapshot of tick data (trades, quote, trades and quotes) for given sym
 
 Retrieving trade snapshot at 12:00:00.00:
 
-    from xythub import tick_snapshot, TickDataType, TickDataFlag
+```python
+from xythub import tick_snapshot, TickDataType, TickDataFlag
 
-    td = tick_snapshot(source='ACTIV', symbols=['CL/17U.NXG'], day='2017.08.16',
-                       data_type=TickDataType.TRADES,
-                       time='12:00:00.000',
-                       flags=[TickDataFlag.INCLUDE_NON_REGULAR,
-                              TickDataFlag.USE_MARKET_TS])
+td = tick_snapshot(source='ACTIV', symbols=['CL/17U.NXG'], day='2017.08.16',
+                   data_type=TickDataType.TRADES,
+                   time='12:00:00.000',
+                   flags=[TickDataFlag.INCLUDE_NON_REGULAR,
+                          TickDataFlag.USE_MARKET_TS])
+```
 
 Retrieving quote snapshot at 09:15:00:
 
-    from xythub import tick_snapshot, TickDataType, TickDataFlag
+```python
+from xythub import tick_snapshot, TickDataType, TickDataFlag
 
-    td = tick_snapshot(source='ACTIV', symbols=['CL/17U.NXG'], day='2017.08.16',
-                       data_type=TickDataType.QUOTES,
-                       time='09:15:00.000',
-                       flags=[])
+td = tick_snapshot(source='ACTIV', symbols=['CL/17U.NXG'], day='2017.08.16',
+                   data_type=TickDataType.QUOTES,
+                   time='09:15:00.000',
+                   flags=[])
+```
 
 Retrieving trade and quote snapshot at 10:03:00:
 
-    from xythub import tick_snapshot, TickDataType, TickDataFlag
+```python
+from xythub import tick_snapshot, TickDataType, TickDataFlag
 
-    td = tick_snapshot(source='ACTIV', symbols=['CL/17U.NXG'], day='2017.08.16',
-                       data_type=TickDataType.TRADES_AND_QUOTES,
-                       time='10:03:00.000',
-                       flags=[TickDataFlag.INCLUDE_NON_REGULAR,
-                              TickDataFlag.USE_MARKET_TS])
+td = tick_snapshot(source='ACTIV', symbols=['CL/17U.NXG'], day='2017.08.16',
+                   data_type=TickDataType.TRADES_AND_QUOTES,
+                   time='10:03:00.000',
+                   flags=[TickDataFlag.INCLUDE_NON_REGULAR,
+                          TickDataFlag.USE_MARKET_TS])
+```
 
 #### Input parameters
 
@@ -435,10 +453,12 @@ Available Type and Flag values - as described [here](lib_python.html#input-param
 
 Retrieving orders:
 
-    from xythub import order_data
+```python
+from xythub import order_data
 
-    orders = order_data(source='ACTIV', symbols=['DBK.XE'], day='2016.10.04',
-                        from_time='09:00:00.000', to_time='09:01:30.000')
+orders = order_data(source='ACTIV', symbols=['DBK.XE'], day='2016.10.04',
+                    from_time='09:00:00.000', to_time='09:01:30.000')
+```
 
 #### Input parameters
 
@@ -470,10 +490,11 @@ Retrieving orders:
 
 Retrieving orders:
 
-    from xythub import auction_data
+```python
+from xythub import auction_data
 
-    auctions = auction_data(source='ACTIV', symbols=['DBK.XE'], day='2016.10.04')
-
+auctions = auction_data(source='ACTIV', symbols=['DBK.XE'], day='2016.10.04')
+```
 
 #### Input parameters
 
@@ -510,10 +531,11 @@ Retrieving orders:
 
 Retrieving end of day data:
 
-    from xythub import end_of_day
+```python
+from xythub import end_of_day
 
-    eod = end_of_day(source='ACTIV', symbols=['DBK.XE'], first_day='2016.09.01', last_day='2017.08.02')
-
+eod = end_of_day(source='ACTIV', symbols=['DBK.XE'], first_day='2016.09.01', last_day='2017.08.02')
+```
 
 #### Input parameters
 
@@ -542,11 +564,12 @@ Retrieving end of day data:
 
 Retrieving settlement prices for given list of derivative symbols:
 
-    from xythub import settlement_prices
+```python
+from xythub import settlement_prices
 
-    prices = settlement_prices(source='ACTIV', symbols=['DBK.XE'],
-                               first_day='2016.10.04', last_day='2016.11.04')
-
+prices = settlement_prices(source='ACTIV', symbols=['DBK.XE'],
+                           first_day='2016.10.04', last_day='2016.11.04')
+```
 
 #### Input parameters
 
@@ -579,10 +602,11 @@ Retrieving reference data
 Retrieves reference data for given symbols and date.
 Note searching by pattern and retrieval of basing reference data is possible via `lookup_symbols` function.
 
-    from xythub import reference_data
+```python
+from xythub import reference_data
 
-    reference = reference_data(source='ACTIV', symbols=['DBK.XE'], day='2016.09.01')
-
+reference = reference_data(source='ACTIV', symbols=['DBK.XE'], day='2016.09.01')
+```
 
 #### Input parameters
 
@@ -671,10 +695,11 @@ Additional columns available for options:
 
 Retrieving instrument status:
 
-    from xythub import instrument_status
+```python
+from xythub import instrument_status
 
-    status = instrument_status(source='ACTIV', symbols=['DBK.XE', 'ADS.XE'], day='2016.09.02')
-
+status = instrument_status(source='ACTIV', symbols=['DBK.XE', 'ADS.XE'], day='2016.09.02')
+```
 
 #### Input parameters
 
@@ -700,10 +725,11 @@ Retrieving instrument status:
 
 Retrieving tick rules:
 
-    from xythub import tick_rules
+```python
+from xythub import tick_rules
 
-    rules = tick_rules(source='ACTIV', symbols=['DBK.XE'], day='2016.09.02')
-
+rules = tick_rules(source='ACTIV', symbols=['DBK.XE'], day='2016.09.02')
+```
 
 #### Input parameters
 
@@ -729,30 +755,34 @@ Retrieves option or future chain for given chain identifier (either option stem 
 
 Retrieving option chain:
 
-    from xythub import chain, ChainType
+```python
+from xythub import chain, ChainType
 
-    chains = chain(source='ACTIV', exchange='OPRA_COMPOSITE',
-                   symbol='=DJX.W', day='2016.09.02',
-                   chain_type=ChainType.OPTIONS)
+chains = chain(source='ACTIV', exchange='OPRA_COMPOSITE',
+               symbol='=DJX.W', day='2016.09.02',
+               chain_type=ChainType.OPTIONS)
+```
 
 
 Retrieving future chain:
 
-    from xythub import chain, ChainType
+```python
+from xythub import chain, ChainType
 
-    chains = chain(source='ACTIV', exchange='NYMEX',
-                   symbol='CL', day='2016.09.02',
-                   chain_type=ChainType.FUTURES)
-
+chains = chain(source='ACTIV', exchange='NYMEX',
+               symbol='CL', day='2016.09.02',
+               chain_type=ChainType.FUTURES)
+```
 
 Retrieving future option chain:
 
-    from xythub import chain, ChainType
+```python
+from xythub import chain, ChainType
 
-    chains = chain(source='ACTIV', exchange='NYMEX',
-                   symbol='CL', day='2016.09.02',
-                   chain_type=ChainType.FUTURE_OPTIONS)
-
+chains = chain(source='ACTIV', exchange='NYMEX',
+               symbol='CL', day='2016.09.02',
+               chain_type=ChainType.FUTURE_OPTIONS)
+```
 
 #### Input parameters
 
@@ -809,25 +839,26 @@ Troubleshooting
 
 HTTP proxy can be set on default client object:
 
-    proxies = {
-        'https': 'http://proxy.mydomain.com:8888'
-    }
-    XytClient.default().proxies=proxies
+```python
+proxies = {
+    'https': 'http://proxy.mydomain.com:8888'
+}
+XytClient.default().proxies=proxies
 
-    symbols = lookup_symbols(source='ACTIV')
-
+symbols = lookup_symbols(source='ACTIV')
+```
 
 You can also create client object and pass it as a parameter to API function:
 
-    client = XytClient(user_id=USERNAME, user_password=PASSWORD, proxies=proxies)
+```python
+client = XytClient(user_id=USERNAME, user_password=PASSWORD, proxies=proxies)
 
-    symbols = lookup_symbols(connection=client, source='ACTIV')
-
+symbols = lookup_symbols(connection=client, source='ACTIV')
+```
 
 To use HTTP Basic Auth with your proxy, use the `http://user:password@host/` syntax.
 
 Read more on [Python requests proxies](http://docs.python-requests.org/en/master/user/advanced/#proxies).
-
 
 Development
 -----------
@@ -836,6 +867,13 @@ Development
 
 If you wish to work on local development please clone/fork the git repo
 and use: `pip install -r requirements.txt` to setup the project.
+
+### Protobuf generation
+
+To generate python wrappers from protobuf API declaration, execute:
+
+`protoc --proto_path=api api\xyt\api_data.proto api\xyt\types.proto --python_out=.`
+
 
 ### Testing
 

@@ -9,7 +9,7 @@ folder: xyt
 
 Installation
 ------------
-In order to use big xyt Cloud Platform R Client please install `xythub` package:
+In order to use xyt hub R Client please install `xythub` package:
 
 ```
 R CMD INSTALL xythub_X.Y.Z.tar.gz
@@ -21,10 +21,14 @@ This library requires R 3.4 to run.
 
 Library initialization
 ----------------------
+
+To configure authentication settings invoke `configure` function:
+
 ```
 library("xythub")
-xythub.configure("your@username.com", "password")
+xythub.configure(USERNAME, password = PASSWORD)
 ```
+
 
 Data representation
 -------------------
@@ -119,7 +123,6 @@ More advanced search limiting to specific exchanges on the data source and speci
 
 ```
 foundSymbols <- xythub.lookupSymbols(source = "ACTIV", pattern = "zal", exchangeFilters = c("XETRA", "BXTR"),
-                                     itemTypeFilters = c(xythub.ITEM_TYPE()$INDIVIDUAL_ITEM),
                                      firstDay = "2016-09-01", lastDay = "2016-09-02")
 ```
 
@@ -132,8 +135,6 @@ foundSymbols <- xythub.lookupSymbols(source = "ACTIV", pattern = "zal", exchange
 | exchangeFilters      | character               |           | Narrow lookup to one or more exchange names.     |
 | regionFilters        | character               |           | Narrow lookup to one or more region names.       |
 | entityFilters        | character               |           | Narrow lookup to one or more entities.           |
-| productTypeFilters   | c(xythub.PRODUCT_TYPE)  |           | Narrow lookup to one or more product types.      |
-| itemTypeFilters      | c(xythub.ITEM_TYPE)     |           | Narrow lookup to one or more item types.         |
 | firstDay             | POSIXlt / character     |           | First day that should be taken into account.     |
 | lastDay              | POSIXlt / character     |           | Last day that should be taken into account.      |
 | pageLimit            | integer                 |           | Size of the paging window.                       |

@@ -9,7 +9,7 @@ folder: xyt
 
 Installation
 ------------
-In order to use big xyt Cloud Platform Java Client add the following lines to your `pom.xml`:
+In order to use xyt hub Java Client add the following lines to your `pom.xml`:
 
 ```
 <dependency>
@@ -26,9 +26,12 @@ This library requires JDK8+.
 Creating client object
 -----------------------
 
+The API client support authentication via password:
+
 ```
-XytHubClient client = new XytHubClient("your@username.com", "password");
+XytHubClient client = XytHubClientBuilder.builder().withUsername(USERNAME).withPassword(PASSWORD).build();
 ```
+
 
 Browsing data catalogue
 -----------------------
@@ -109,11 +112,10 @@ More advanced search limiting to specific exchanges on the data source and speci
 ```
 String pattern = "zal";
 List<String> exchanges = Arrays.asList("XETRA", "BXTR");
-List<ItemType> itemTypes = Arrays.asList(ItemType.INDIVIDUAL_ITEM);
 
 SymbolData symbols = client.lookupSymbols("ACTIV", pattern, exchanges,
                                           new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
-                                          itemTypes, "2016.09.01", "2016.09.02");
+                                          "2016.09.01", "2016.09.02");
 ```
 
 
@@ -126,8 +128,6 @@ SymbolData symbols = client.lookupSymbols("ACTIV", pattern, exchanges,
 | exchangeFilters      | List\<String\>     |           | Narrow lookup to one or more exchange names.     |
 | regionFilters        | List\<String\>     |           | Narrow lookup to one or more region names.       |
 | entityFilters        | List\<String\>     |           | Narrow lookup to one or more entities.           |
-| productTypeFilters   | List\<ProductType\>|           | Narrow lookup to one or more product types.      |
-| itemTypeFilters      | List\<ItemType\>   |           | Narrow lookup to one or more item types.         |
 | firstDay             | Date / String      |           | First day that should be taken into account.     |
 | lastDay              | Date / String      |           | Last day that should be taken into account.      |
 | pageLimit            | Integer            |           | Size of the paging window.                       |
@@ -148,7 +148,6 @@ SymbolData symbols = client.lookupSymbols("ACTIV", pattern, exchanges,
 | currency         | String     | Item currency.             |
 | market_segment   | String     | Market segment.            |
 | entity_class     | String     | Entity class.              |
-| item_type        | ItemType   | Item type.                 |
 | first_day        | Date       | First available day.       |
 | last_day         | Date       | Last available day.        |
 
@@ -244,6 +243,7 @@ Available Flag values:
 | INCLUDE_CONTINUOUS_SESSION_ONLY   | Specifies if only continuous session messages should be included in the result set. This covers filtering by trade conditions assigned to continuous session for trades and instrument status filtering for quotes.                                                        |
 | EXCLUDE_CANCELLED_TRADES 	        | Specifies if canceled trades are removed from the output. Functionality removes only canceled trades that are no corrections.                                                                                                                                              |
 
+
 #### Output columns
 
 | Column           | Type       | TRADES request    |  QUOTES request  |  TRADES_AND_QUOTES request                                 |  
@@ -258,6 +258,7 @@ Available Flag values:
 | bid_size         | Long       | -                 | Bid size.        | Size of most recent bid as of trade time.                  |
 | ask              | Double     | -                 | Ask price.       | Price of most recent ask as of trade time.                 |
 | ask_size         | Long       | -                 | Ask size.        | Size of most recent ask as of trade time.                  |
+
 
 ### Trades and/or quotes aggregated
 
@@ -776,16 +777,14 @@ HTTP proxy can be set while constructing client object:
 
 ```
 Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.mydomain.com", 8080));
-XytHubClient client = new XytHubClient("your@username.com", "password",
-                                       XytHubClient.DEFAULT_CONNECT_TIMEOUT, XytHubClient.DEFAULT_READ_TIMEOUT,
-                                       proxy);
+XytHubClient client = XytHubClientBuilder.builder().withUsername(USERNAME).withPassword(PASSWORD).withProxy(proxy).build();
 ```
 
 Read more about [Java proxies](https://docs.oracle.com/javase/6/docs/technotes/guides/net/proxies.html).
 
 ### SSL certificates.
 
-Oracle JDK/JRE prior to 8u101 doesn't trust Let's Encrypt certificates which are used by big xyt Cloud Platform.
+Oracle JDK/JRE prior to 8u101 doesn't trust Let's Encrypt certificates which are used by big xyt API.
 
 In order to remedy this you can:
 

@@ -9,7 +9,7 @@ folder: xyt
 
 Installation
 ------------
-In order to use big xyt Cloud Platform C# Client add a reference in C#:
+In order to use xyt hub C# Client add a reference in C#:
 1. In `Solution Explorer`, right-click the project node and click `Add Reference`.
 2. In the `Add Reference` dialog box, select the `Browse` tab and locate `xythub-csharp.dll` and then click `OK`.
 
@@ -20,9 +20,12 @@ This library requires .NET Framework 4.5 to run.
 Creating client object
 -----------------------
 
+The API client support authentication via password:
+
 ```
-XytHubClient client = new XytHubClient("your@username.com", "password");
+XytHubClient client = new XytHubClient(USERNAME, password: PASSWORD);
 ```
+
 
 Browsing data catalogue
 -----------------------
@@ -105,11 +108,10 @@ More advanced search limiting to specific exchanges on the data source and speci
 ```
 String pattern = "zal";
 List<string> exchanges = new List<string>() { "XETRA", "BXTR" };
-List<ItemType> itemTypes = new List<ItemType>() { ItemType.IndividualItem };
 
 var symbols = client.LookupSymbols("SOURCE", pattern,
                                    firstDay: new DateTime(2016, 9, 1), lastDay: new DateTime(2016, 9, 2),
-                                   exchangeFilters: exchanges, itemTypeFilters: itemTypes);
+                                   exchangeFilters: exchanges);
 ```
 
 
@@ -122,8 +124,6 @@ var symbols = client.LookupSymbols("SOURCE", pattern,
 | exchangeFilters      | List\<String\>      |           | Narrow lookup to one or more exchange names.     |
 | regionFilters        | List\<String\>      |           | Narrow lookup to one or more region names.       |
 | entityFilters        | List\<String\>      |           | Narrow lookup to one or more entities.           |
-| productTypeFilters   | List\<ProductType\> |           | Narrow lookup to one or more product types.      |
-| itemTypeFilters      | List\<ItemType\>    |           | Narrow lookup to one or more item types.         |
 | firstDay             | DateTime?           |           | First day that should be taken into account.     |
 | lastDay              | DateTime?           |           | Last day that should be taken into account.      |
 | pageLimit            | int?                |           | Size of the paging window.                       |
@@ -143,7 +143,6 @@ var symbols = client.LookupSymbols("SOURCE", pattern,
 | currency         | String     | Item currency.             |
 | market_segment   | String     | Market segment.            |
 | entity_class     | String     | Entity class.              |
-| item_type        | ItemType   | Item type.                 |
 | first_day        | DateTime   | First available day.       |
 | last_day         | DateTime   | Last available day.        |
 
@@ -792,6 +791,16 @@ HTTP proxy can be set while constructing client object:
 IWebProxy proxy = new WebProxy("proxy.mydomain.com", 8080);
 XytHubClient client = new XytHubClient("your@username.com", "password", proxy: proxy);
 ```
+
+Development
+-----------
+
+### Protobuf generation
+
+To generate C# wrappers from protobuf API declaration, execute:
+
+`protoc --proto_path=api --csharp_out=xythub\api api\xyt\api_data.proto api\xyt\types.proto`
+
 
 License
 -------
