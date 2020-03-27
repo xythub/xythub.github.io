@@ -110,14 +110,6 @@ df.head() # Limit the number of rows to 5
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>group</th>
-      <th>date</th>
-      <th>stock</th>
-      <th>market_category</th>
-      <th>traded_value_in_eur</th>
-      <th>symbol</th>
-      <th>isin</th>
-      <th>turnover_outside_regular_hours</th>
       <th>value_traded_above_lisin_eur</th>
       <th>exchange</th>
       <th>addressable_traded_value_in_eur</th>
@@ -130,19 +122,19 @@ df.head() # Limit the number of rows to 5
       <th>local_code</th>
       <th>trade_category</th>
       <th>trade_size</th>
+      <th>group</th>
+      <th>date</th>
+      <th>stock</th>
+      <th>market_category</th>
+      <th>traded_value_in_eur</th>
+      <th>symbol</th>
+      <th>isin</th>
+      <th>turnover_outside_regular_hours</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>Aquis Exchange</td>
-      <td>2019-10-02</td>
-      <td>Adidas AG, DE000A1EWWW0</td>
-      <td>On Exchange</td>
-      <td>822375.00</td>
-      <td>ADSd.AQX</td>
-      <td>DE000A1EWWW0</td>
-      <td>0.0</td>
       <td>802756.25</td>
       <td>Aquis Exchange</td>
       <td>822375.00</td>
@@ -155,17 +147,17 @@ df.head() # Limit the number of rows to 5
       <td>ADSd</td>
       <td>Lit/Auction Closing</td>
       <td>3060</td>
-    </tr>
-    <tr>
-      <th>1</th>
       <td>Aquis Exchange</td>
       <td>2019-10-02</td>
       <td>Adidas AG, DE000A1EWWW0</td>
       <td>On Exchange</td>
-      <td>15713.90</td>
+      <td>822375.00</td>
       <td>ADSd.AQX</td>
       <td>DE000A1EWWW0</td>
       <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
       <td>0.00</td>
       <td>Aquis Exchange</td>
       <td>15713.90</td>
@@ -178,17 +170,17 @@ df.head() # Limit the number of rows to 5
       <td>ADSd</td>
       <td>Lit/Auction Periodic</td>
       <td>58</td>
-    </tr>
-    <tr>
-      <th>2</th>
       <td>Aquis Exchange</td>
       <td>2019-10-02</td>
       <td>Adidas AG, DE000A1EWWW0</td>
       <td>On Exchange</td>
-      <td>11798710.40</td>
+      <td>15713.90</td>
       <td>ADSd.AQX</td>
       <td>DE000A1EWWW0</td>
       <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
       <td>0.00</td>
       <td>Aquis Exchange</td>
       <td>11798710.40</td>
@@ -201,17 +193,17 @@ df.head() # Limit the number of rows to 5
       <td>ADSd</td>
       <td>Lit/Order Book</td>
       <td>43050</td>
-    </tr>
-    <tr>
-      <th>3</th>
       <td>Aquis Exchange</td>
-      <td>2019-10-04</td>
+      <td>2019-10-02</td>
       <td>Adidas AG, DE000A1EWWW0</td>
       <td>On Exchange</td>
-      <td>889218.40</td>
+      <td>11798710.40</td>
       <td>ADSd.AQX</td>
       <td>DE000A1EWWW0</td>
       <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
       <td>0.00</td>
       <td>Aquis Exchange</td>
       <td>889218.40</td>
@@ -224,17 +216,17 @@ df.head() # Limit the number of rows to 5
       <td>ADSd</td>
       <td>Lit/Auction Closing</td>
       <td>3274</td>
-    </tr>
-    <tr>
-      <th>4</th>
       <td>Aquis Exchange</td>
       <td>2019-10-04</td>
       <td>Adidas AG, DE000A1EWWW0</td>
       <td>On Exchange</td>
-      <td>13259.15</td>
+      <td>889218.40</td>
       <td>ADSd.AQX</td>
       <td>DE000A1EWWW0</td>
       <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
       <td>0.00</td>
       <td>Aquis Exchange</td>
       <td>13259.15</td>
@@ -247,6 +239,14 @@ df.head() # Limit the number of rows to 5
       <td>ADSd</td>
       <td>Lit/Auction Periodic</td>
       <td>49</td>
+      <td>Aquis Exchange</td>
+      <td>2019-10-04</td>
+      <td>Adidas AG, DE000A1EWWW0</td>
+      <td>On Exchange</td>
+      <td>13259.15</td>
+      <td>ADSd.AQX</td>
+      <td>DE000A1EWWW0</td>
+      <td>0.0</td>
     </tr>
   </tbody>
 </table>
@@ -562,10 +562,6 @@ df.head()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>average_value_per_trade</th>
-      <th>traded_value_in_eur</th>
-      <th>trade_category</th>
-      <th>adjusted_reg_hours_only_sub_lis</th>
       <th>adjusted</th>
       <th>onoff</th>
       <th>advt</th>
@@ -573,15 +569,15 @@ df.head()
       <th>index</th>
       <th>adjusted_reg_hours_only</th>
       <th>month_of_date</th>
+      <th>average_value_per_trade</th>
+      <th>traded_value_in_eur</th>
+      <th>trade_category</th>
+      <th>adjusted_reg_hours_only_sub_lis</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>8.390969e+05</td>
-      <td>3.356388e+07</td>
-      <td>Dark/IOI Negotiation</td>
-      <td>3.356388e+07</td>
       <td>3.356388e+07</td>
       <td>ON</td>
       <td>2.237592e+06</td>
@@ -589,13 +585,13 @@ df.head()
       <td>AT20</td>
       <td>3.356388e+07</td>
       <td>2019.10</td>
+      <td>8.390969e+05</td>
+      <td>3.356388e+07</td>
+      <td>Dark/IOI Negotiation</td>
+      <td>3.356388e+07</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1.860599e+04</td>
-      <td>4.554001e+08</td>
-      <td>Dark/Order Book</td>
-      <td>4.554001e+08</td>
       <td>4.554001e+08</td>
       <td>ON</td>
       <td>1.980001e+07</td>
@@ -603,13 +599,13 @@ df.head()
       <td>AT20</td>
       <td>4.554001e+08</td>
       <td>2019.10</td>
+      <td>1.860599e+04</td>
+      <td>4.554001e+08</td>
+      <td>Dark/Order Book</td>
+      <td>4.554001e+08</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1.887971e+06</td>
-      <td>9.364334e+08</td>
-      <td>Lit/Auction Closing</td>
-      <td>9.364334e+08</td>
       <td>9.364334e+08</td>
       <td>ON</td>
       <td>4.071450e+07</td>
@@ -617,13 +613,13 @@ df.head()
       <td>AT20</td>
       <td>9.364334e+08</td>
       <td>2019.10</td>
+      <td>1.887971e+06</td>
+      <td>9.364334e+08</td>
+      <td>Lit/Auction Closing</td>
+      <td>9.364334e+08</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1.153477e+04</td>
-      <td>4.510096e+06</td>
-      <td>Lit/Auction Intraday</td>
-      <td>4.510096e+06</td>
       <td>4.510096e+06</td>
       <td>ON</td>
       <td>1.960911e+05</td>
@@ -631,13 +627,13 @@ df.head()
       <td>AT20</td>
       <td>4.510096e+06</td>
       <td>2019.10</td>
+      <td>1.153477e+04</td>
+      <td>4.510096e+06</td>
+      <td>Lit/Auction Intraday</td>
+      <td>4.510096e+06</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>3.309091e+04</td>
-      <td>1.810073e+07</td>
-      <td>Lit/Auction Opening</td>
-      <td>1.810073e+07</td>
       <td>1.810073e+07</td>
       <td>ON</td>
       <td>7.869881e+05</td>
@@ -645,6 +641,10 @@ df.head()
       <td>AT20</td>
       <td>1.810073e+07</td>
       <td>2019.10</td>
+      <td>3.309091e+04</td>
+      <td>1.810073e+07</td>
+      <td>Lit/Auction Opening</td>
+      <td>1.810073e+07</td>
     </tr>
   </tbody>
 </table>
@@ -673,83 +673,83 @@ df.head()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>traded_value_in_eur</th>
-      <th>market_category</th>
-      <th>trade_category</th>
-      <th>adjusted_reg_hours_only_sub_lis</th>
       <th>adjusted</th>
       <th>value_traded_above_lisin_eur</th>
       <th>group</th>
       <th>exchange</th>
       <th>adjusted_reg_hours_only</th>
       <th>date</th>
+      <th>traded_value_in_eur</th>
+      <th>market_category</th>
+      <th>trade_category</th>
+      <th>adjusted_reg_hours_only_sub_lis</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>6.059862e+07</td>
-      <td>On Exchange</td>
-      <td>Lit/Auction Closing</td>
-      <td>6.059862e+07</td>
-      <td>6.059862e+07</td>
       <td>7.402420e+06</td>
       <td>Aquis Exchange</td>
       <td>Aquis Exchange</td>
       <td>6.059862e+07</td>
       <td>2019-10-02</td>
+      <td>6.059862e+07</td>
+      <td>On Exchange</td>
+      <td>Lit/Auction Closing</td>
+      <td>6.059862e+07</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>3.116206e+07</td>
-      <td>On Exchange</td>
-      <td>Lit/Auction Periodic</td>
-      <td>3.116206e+07</td>
       <td>3.116206e+07</td>
       <td>0.000000e+00</td>
       <td>Aquis Exchange</td>
       <td>Aquis Exchange</td>
       <td>3.116206e+07</td>
       <td>2019-10-02</td>
+      <td>3.116206e+07</td>
+      <td>On Exchange</td>
+      <td>Lit/Auction Periodic</td>
+      <td>3.116206e+07</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1.465978e+09</td>
-      <td>On Exchange</td>
-      <td>Lit/Order Book</td>
-      <td>1.465978e+09</td>
       <td>1.465978e+09</td>
       <td>1.574655e+04</td>
       <td>Aquis Exchange</td>
       <td>Aquis Exchange</td>
       <td>1.465978e+09</td>
       <td>2019-10-02</td>
+      <td>1.465978e+09</td>
+      <td>On Exchange</td>
+      <td>Lit/Order Book</td>
+      <td>1.465978e+09</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>5.239423e+06</td>
-      <td>On Exchange</td>
-      <td>Lit/Auction Closing</td>
-      <td>5.239423e+06</td>
       <td>5.239423e+06</td>
       <td>4.389265e+06</td>
       <td>Athens Stock Exchange</td>
       <td>Athens Stock Exchange</td>
       <td>5.239423e+06</td>
       <td>2019-10-02</td>
+      <td>5.239423e+06</td>
+      <td>On Exchange</td>
+      <td>Lit/Auction Closing</td>
+      <td>5.239423e+06</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>4.399461e+05</td>
-      <td>On Exchange</td>
-      <td>Lit/Auction Opening</td>
-      <td>4.399461e+05</td>
       <td>4.399461e+05</td>
       <td>0.000000e+00</td>
       <td>Athens Stock Exchange</td>
       <td>Athens Stock Exchange</td>
       <td>4.399461e+05</td>
       <td>2019-10-02</td>
+      <td>4.399461e+05</td>
+      <td>On Exchange</td>
+      <td>Lit/Auction Opening</td>
+      <td>4.399461e+05</td>
     </tr>
   </tbody>
 </table>
@@ -1105,7 +1105,188 @@ df.head()
 
 
 
-### 1.8.  EBB, EBO by ISIN and Currency
+### 1.8. Effective spreads statistics for specified index
+
+
+```python
+query_name = 'lcGetSpreadsForIndex'
+query_params = {
+    'dateFrom': pd.Timestamp('2019-10-2'),
+    'dateTo': pd.Timestamp('2019-10-24'),
+    'index': 'UK100',                   
+    'mode': ['asof','ISINCurrency'],    #Parameter 'mode' allows for two options: 'asof' and 'recent'.
+                                        #Option 'asof' returns index/list assignment 'as-of' each day in the range, 
+                                        #option 'recent' returns products included in most recent compositions in 
+                                        #the passed date range.
+                                        #Parameter 'mode' may also accept one of options: ISIN/ISINCurrency/PrimaryMTF
+                                        #Parameter 'mode' is optional, but if no argument is given, combination of 
+                                        #options ISIN/recent is set as default.
+}
+
+df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
+df.head()
+```
+
+
+
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ob_presence_both</th>
+      <th>levels_both</th>
+      <th>exchange</th>
+      <th>spread_ask</th>
+      <th>spread_bid</th>
+      <th>currency</th>
+      <th>spread_both</th>
+      <th>fill_presence_ask</th>
+      <th>fill_presence_bid</th>
+      <th>local_code</th>
+      <th>...</th>
+      <th>levels_ask</th>
+      <th>levels_bid</th>
+      <th>group</th>
+      <th>date</th>
+      <th>ob_presence_ask</th>
+      <th>ob_presence_bid</th>
+      <th>stock</th>
+      <th>symbol</th>
+      <th>fill_presence_both</th>
+      <th>isin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.999993</td>
+      <td>1.000000</td>
+      <td>Cboe BXE</td>
+      <td>17.240114</td>
+      <td>17.276987</td>
+      <td>GBX</td>
+      <td>34.480228</td>
+      <td>0.999993</td>
+      <td>0.999993</td>
+      <td>HSXl</td>
+      <td>...</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>Cboe Europe</td>
+      <td>2019-10-02</td>
+      <td>0.999993</td>
+      <td>0.999993</td>
+      <td>Hiscox Ltd, BMG4593F1389</td>
+      <td>HSXl.BTE</td>
+      <td>0.999993</td>
+      <td>BMG4593F1389</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.999993</td>
+      <td>2.133036</td>
+      <td>Cboe BXE</td>
+      <td>21.010621</td>
+      <td>20.496922</td>
+      <td>GBX</td>
+      <td>41.459124</td>
+      <td>0.999993</td>
+      <td>0.999993</td>
+      <td>HSXl</td>
+      <td>...</td>
+      <td>1.742867</td>
+      <td>1.855267</td>
+      <td>Cboe Europe</td>
+      <td>2019-10-02</td>
+      <td>0.999993</td>
+      <td>0.999993</td>
+      <td>Hiscox Ltd, BMG4593F1389</td>
+      <td>HSXl.BTE</td>
+      <td>0.999993</td>
+      <td>BMG4593F1389</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.999993</td>
+      <td>3.498155</td>
+      <td>Cboe BXE</td>
+      <td>25.846012</td>
+      <td>25.644454</td>
+      <td>GBX</td>
+      <td>51.312774</td>
+      <td>0.989612</td>
+      <td>0.996653</td>
+      <td>HSXl</td>
+      <td>...</td>
+      <td>2.949744</td>
+      <td>3.110383</td>
+      <td>Cboe Europe</td>
+      <td>2019-10-02</td>
+      <td>0.999993</td>
+      <td>0.999993</td>
+      <td>Hiscox Ltd, BMG4593F1389</td>
+      <td>HSXl.BTE</td>
+      <td>0.989404</td>
+      <td>BMG4593F1389</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.999993</td>
+      <td>6.148026</td>
+      <td>Cboe BXE</td>
+      <td>41.597791</td>
+      <td>46.288868</td>
+      <td>GBX</td>
+      <td>87.643867</td>
+      <td>0.988228</td>
+      <td>0.987626</td>
+      <td>HSXl</td>
+      <td>...</td>
+      <td>5.501066</td>
+      <td>5.702067</td>
+      <td>Cboe Europe</td>
+      <td>2019-10-02</td>
+      <td>0.999993</td>
+      <td>0.999993</td>
+      <td>Hiscox Ltd, BMG4593F1389</td>
+      <td>HSXl.BTE</td>
+      <td>0.987616</td>
+      <td>BMG4593F1389</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.999999</td>
+      <td>1.000000</td>
+      <td>Cboe BXE</td>
+      <td>23.570847</td>
+      <td>23.635222</td>
+      <td>GBX</td>
+      <td>47.141694</td>
+      <td>0.999999</td>
+      <td>0.999999</td>
+      <td>HSXl</td>
+      <td>...</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>Cboe Europe</td>
+      <td>2019-10-03</td>
+      <td>0.999999</td>
+      <td>0.999999</td>
+      <td>Hiscox Ltd, BMG4593F1389</td>
+      <td>HSXl.BTE</td>
+      <td>0.999999</td>
+      <td>BMG4593F1389</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 21 columns</p>
+</div>
+
+
+
+### 1.9.  EBB, EBO by ISIN and Currency
 
 
 ```python
@@ -1128,10 +1309,6 @@ df.head()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>stock</th>
-      <th>symbol</th>
-      <th>isin</th>
-      <th>presence_ebb</th>
       <th>exchange</th>
       <th>presence_ebb_exclusive</th>
       <th>currency</th>
@@ -1142,15 +1319,15 @@ df.head()
       <th>combined_ask_presence</th>
       <th>combined_bid_presence</th>
       <th>date</th>
+      <th>stock</th>
+      <th>symbol</th>
+      <th>isin</th>
+      <th>presence_ebb</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>Axel Springer SE</td>
-      <td>SPR.XE</td>
-      <td>DE0005501357</td>
-      <td>0.987787</td>
       <td>Xetra</td>
       <td>2.041062e-01</td>
       <td>EUR</td>
@@ -1161,13 +1338,13 @@ df.head()
       <td>0.995685</td>
       <td>0.995685</td>
       <td>2019-10-02</td>
+      <td>Axel Springer SE</td>
+      <td>SPR.XE</td>
+      <td>DE0005501357</td>
+      <td>0.987787</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Axel Springer SE</td>
-      <td>SPRd.AQX</td>
-      <td>DE0005501357</td>
-      <td>0.687827</td>
       <td>Aquis Exchange</td>
       <td>1.969282e-07</td>
       <td>EUR</td>
@@ -1178,13 +1355,13 @@ df.head()
       <td>0.995685</td>
       <td>0.995685</td>
       <td>2019-10-02</td>
+      <td>Axel Springer SE</td>
+      <td>SPRd.AQX</td>
+      <td>DE0005501357</td>
+      <td>0.687827</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Axel Springer SE</td>
-      <td>SPRd.BTE</td>
-      <td>DE0005501357</td>
-      <td>0.248540</td>
       <td>Cboe BXE</td>
       <td>6.498631e-06</td>
       <td>EUR</td>
@@ -1195,13 +1372,13 @@ df.head()
       <td>0.995685</td>
       <td>0.995685</td>
       <td>2019-10-02</td>
+      <td>Axel Springer SE</td>
+      <td>SPRd.BTE</td>
+      <td>DE0005501357</td>
+      <td>0.248540</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Axel Springer SE</td>
-      <td>SPRd.CHIX</td>
-      <td>DE0005501357</td>
-      <td>0.738243</td>
       <td>Cboe CXE</td>
       <td>3.938564e-07</td>
       <td>EUR</td>
@@ -1212,13 +1389,13 @@ df.head()
       <td>0.995685</td>
       <td>0.995685</td>
       <td>2019-10-02</td>
+      <td>Axel Springer SE</td>
+      <td>SPRd.CHIX</td>
+      <td>DE0005501357</td>
+      <td>0.738243</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Axel Springer SE</td>
-      <td>SPRd.TU</td>
-      <td>DE0005501357</td>
-      <td>0.705556</td>
       <td>Turquoise</td>
       <td>3.708815e-06</td>
       <td>EUR</td>
@@ -1229,6 +1406,10 @@ df.head()
       <td>0.995685</td>
       <td>0.995685</td>
       <td>2019-10-02</td>
+      <td>Axel Springer SE</td>
+      <td>SPRd.TU</td>
+      <td>DE0005501357</td>
+      <td>0.705556</td>
     </tr>
   </tbody>
 </table>
@@ -1236,7 +1417,7 @@ df.head()
 
 
 
-### 1.9. EBB, EBO by Primary Exchange + MTFs
+### 1.10. EBB, EBO by Primary Exchange + MTFs
 
 
 ```python
