@@ -8,27 +8,34 @@ entries:
   - title: API documentation
     output: web
     folderitems:
-    - title: Java
-      url: /lib_java.html
-      output: web
-
-    - title: C#
-      url: /lib_csharp.html
-      output: web
-
     - title: Python
       url: /lib_python.html
       output: web
-
+    - title: Java
+      url: /lib_java.html
+      output: web
+    - title: C#
+      url: /lib_csharp.html
+      output: web
     - title: R
       url: /lib_r.html
       output: web
 
-  - title: LC API documentation
+  - title: Liquidity Cockpit API
     output: web
     folderitems:
-    - title: LC API Python
+    - title: LC API Python introduction
       url: /lib_lc_api_python.html
+      output: web
+
+  - title: TCA API
+    output: web
+    folderitems:
+    - title: TCA Python API introduction
+      url: /lib_tca_api_python.html
+      output: web
+    - title: TCA use cases
+      url: /lib_tca_api_use_cases.html
       output: web
 
   - title: REST API reference
@@ -38,21 +45,17 @@ entries:
     - title: Overview
       url: /api_overview.html
       output: web
-
     - title: API description
       url: /api_proto.html
       output: web
-
+    - title: Python REST API sample
+      url: /api_sample_python.html
+      output: web
     - title: Java REST API sample
       url: /api_sample_java.html
       output: web
-
     - title: C# REST API sample
       url: /api_sample_csharp.html
-      output: web
-
-    - title: Python REST API sample
-      url: /api_sample_python.html
       output: web
 
   - title: Contact us

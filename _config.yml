@@ -3,10 +3,10 @@ repository: xythub/xythub.github.io
 output: web
 # this property is useful for conditional filtering of content that is separate from the PDF.
 
-topnav_title: xyt hub API documentation
+topnav_title: big xyt API documentation
 # this appears on the top navigation bar next to the home button
 
-site_title: xyt hub API documentation
+site_title: big xyt API documentation
 # this appears in the html browser tab for the site title (seen mostly by search engines, not users)
 
 company_name: big xyt AG

@@ -14,6 +14,8 @@ topnav_dropdowns:
       folderitems:
         - title: xyt hub
           external_url: https://xythub.com
+        - title: Liquidity Cockpit
+          external_url: https://liquidity-cockpit.com/
         - title: big xyt homepage
           external_url: http://www.big-xyt.com
         - title: Twitter
