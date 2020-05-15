@@ -9,7 +9,7 @@ folder: xyt
 
 ### 0. Prerequisites
 
-API version: `1.1.0.0`
+API version: `1.1.1.0`
 
 -------------
 
@@ -455,10 +455,10 @@ tick_analytics(
 
 | Field          | Description     |
 |----------------|-----------------|
-| TRADES         | Trades          |
-| SHARES         | Shares          |
-| TRADES_ALL     | All trades      |
-| SHARES_ALL     | All shares      |
+| TRADES         | RPM based on count          |
+| SHARES         | RPM based on volume          |
+| TRADES_INCLUDE_EQUAL     | RPM based on count, including trades with price equal to benchmark      |
+| SHARES_INCLUDE_EQUAL     | RPM based on volume, including trades with price equal to benchmark      |
 
 <br>
 
@@ -589,14 +589,14 @@ tick_analytics(
 | Field                   | Description                |
 |-------------------------|----------------------------|
 | PVWAP                   | PVWAP                      |
-| VOLUME                  | Volume                     |
-| VOLUME_LOWER_PVWAP      | Lower volume PVWAP         |
-| VOLUME_UPPER_PVWAP      | Upper volume PVWAP         |
-| VOLUME_LOWER_LIMIT      | Lower volume limit         |
-| VOLUME_UPPER_LIMIT      | Upper volume limit         |
-| VOLUME_ALL              | All volume                 |
-| VOLUME_ALL_LOWER_PVWAP  | All volume lower PVWAP     |
-| VOLUME_ALL_UPPER_PVWAP  | All volume upper PVWAP     |
+| VOLUME                  | Volume cumulated until order is filled                    |
+| VOLUME_ABOVE_PVWAP      | Volume above PVWAP value, cumulated until order is filled         |
+| VOLUME_BELOW_PVWAP      | Volume below PVWAP value, cumulated until order is filled         |
+| VOLUME_ABOVE_LIMIT      | Volume above limit value, cumulated until order is filled         |
+| VOLUME_BELOW_LIMIT      | Volume below limit value, cumulated until order is filled         |
+| VOLUME_TILL_END              | Volume cumulated until to_datetime parameter                  |
+| VOLUME_TILL_END_ABOVE_PVWAP  | Volume above PVWAP value, cumulated until to_datetime parameter     |
+| VOLUME_TILL_END_BELOW_PVWAP  | Volume below PVWAP value, cumulated until to_datetime parameter     |
 
 <br>
 

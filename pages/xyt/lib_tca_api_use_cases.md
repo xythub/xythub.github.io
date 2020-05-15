@@ -198,7 +198,7 @@ RPM(
     from_datetime=ARRIVAL_TIME,
     to_datetime=LAST_FILL_TIME,
     benchmark_price=ORDER_PRICE,
-    fields=['SHARES_ALL'],
+    fields=['SHARES_INCLUDE_EQUAL'],
     lower_price_limit=ORDER_LIMIT,
     trade_types=['Lit']    
 )
@@ -243,7 +243,7 @@ MarketParticipation(
     to_datetime=LAST_FILL_TIME,
     trade_size=ORDER_SIZE,
     participation_rate=0.15,
-    fields=['PVWAP', 'VOLUME_UPPER_PVWAP']
+    fields=['PVWAP', 'VOLUME_BELOW_PVWAP']
 )
 ```
 
