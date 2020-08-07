@@ -31,7 +31,7 @@ Authentication requires that following parameters are set:
 The authentication service can be accessed with the `curl` application:
 
 ```shell
-curl http://https://api.xythub.com/auth/oauth/token -u xyt:SECRET -d grant_type=password -d username=USERNAME -d password=PASSWORD
+curl https://api.xythub.com/auth/oauth/token -u xyt:SECRET -d grant_type=password -d username=USERNAME -d password=PASSWORD
 ```
 
 A successful authorization results in the JSON response:
@@ -48,7 +48,7 @@ A successful authorization results in the JSON response:
 Use the obtained `access_token` to request the protected endpoint, e.g.:
 
 ```shell
-curl http://https://api.xythub.com/auth/user -H "Authorization: Bearer TOKEN"
+curl https://api.xythub.com/auth/user -H "Authorization: Bearer TOKEN"
 ```
 
 ## Key concepts

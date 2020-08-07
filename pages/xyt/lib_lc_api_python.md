@@ -1553,6 +1553,798 @@ df.head()
 </div>
 
 
+## 1.11 Price movement
+
+
+```python
+query_name = 'lcGetPriceMovement'
+query_params = {
+    'isins': ['FI0009000681'],
+    'dateFrom': pd.Timestamp('2020-5-10'),
+    'dateTo': pd.Timestamp('2020-5-20'),
+}
+
+df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
+df.head(13)
+```
+
+
+
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>stock</th>
+      <th>symbol</th>
+      <th>isin</th>
+      <th>abs_wavg_price_impact_ebbo</th>
+      <th>wavg_price_movement_prob_ebbo</th>
+      <th>exchange</th>
+      <th>index</th>
+      <th>traded_value_ebbo</th>
+      <th>traded_value_primary</th>
+      <th>abs_wavg_price_impact_primary</th>
+      <th>threshold</th>
+      <th>trade_category</th>
+      <th>group</th>
+      <th>date</th>
+      <th>wavg_price_movement_prob_primary</th>
+      <th>offset</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Nokia Corp</td>
+      <td>0HAF.L</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>FI25</td>
+      <td>3327.0</td>
+      <td>3327.0</td>
+      <td>0.0</td>
+      <td>BelowLIS</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+      <td>0.0</td>
+      <td>-300000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Nokia Corp</td>
+      <td>0HAF.L</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>FI25</td>
+      <td>3327.0</td>
+      <td>3327.0</td>
+      <td>0.0</td>
+      <td>BelowLIS</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+      <td>0.0</td>
+      <td>-60000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Nokia Corp</td>
+      <td>0HAF.L</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>FI25</td>
+      <td>3327.0</td>
+      <td>3327.0</td>
+      <td>0.0</td>
+      <td>BelowLIS</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+      <td>0.0</td>
+      <td>-30000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Nokia Corp</td>
+      <td>0HAF.L</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>FI25</td>
+      <td>3327.0</td>
+      <td>3327.0</td>
+      <td>0.0</td>
+      <td>BelowLIS</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+      <td>0.0</td>
+      <td>-15000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Nokia Corp</td>
+      <td>0HAF.L</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>FI25</td>
+      <td>3327.0</td>
+      <td>3327.0</td>
+      <td>0.0</td>
+      <td>BelowLIS</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+      <td>0.0</td>
+      <td>-5000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Nokia Corp</td>
+      <td>0HAF.L</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>FI25</td>
+      <td>3327.0</td>
+      <td>3327.0</td>
+      <td>0.0</td>
+      <td>BelowLIS</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+      <td>0.0</td>
+      <td>-1000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Nokia Corp</td>
+      <td>0HAF.L</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>FI25</td>
+      <td>3327.0</td>
+      <td>3327.0</td>
+      <td>0.0</td>
+      <td>BelowLIS</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+      <td>0.0</td>
+      <td>-500</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Nokia Corp</td>
+      <td>0HAF.L</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>FI25</td>
+      <td>3327.0</td>
+      <td>3327.0</td>
+      <td>0.0</td>
+      <td>BelowLIS</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+      <td>0.0</td>
+      <td>-200</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Nokia Corp</td>
+      <td>0HAF.L</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>FI25</td>
+      <td>3327.0</td>
+      <td>3327.0</td>
+      <td>0.0</td>
+      <td>BelowLIS</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+      <td>0.0</td>
+      <td>-100</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Nokia Corp</td>
+      <td>0HAF.L</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>FI25</td>
+      <td>3327.0</td>
+      <td>3327.0</td>
+      <td>0.0</td>
+      <td>BelowLIS</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+      <td>0.0</td>
+      <td>-50</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Nokia Corp</td>
+      <td>0HAF.L</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>FI25</td>
+      <td>3327.0</td>
+      <td>3327.0</td>
+      <td>0.0</td>
+      <td>BelowLIS</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+      <td>0.0</td>
+      <td>-25</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Nokia Corp</td>
+      <td>0HAF.L</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>FI25</td>
+      <td>3327.0</td>
+      <td>3327.0</td>
+      <td>0.0</td>
+      <td>BelowLIS</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+      <td>0.0</td>
+      <td>-10</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Nokia Corp</td>
+      <td>0HAF.L</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>FI25</td>
+      <td>3327.0</td>
+      <td>3327.0</td>
+      <td>0.0</td>
+      <td>BelowLIS</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+      <td>0.0</td>
+      <td>-5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+## 1.12 Volume profiles
+
+
+```python
+query_name = 'lcGetVolumeProfile'
+query_params = {
+    'isins': ['FI0009000681'],
+    'dateFrom': pd.Timestamp('2020-5-10'),
+    'dateTo': pd.Timestamp('2020-5-20'),
+}
+
+df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
+df.head()
+```
+
+
+
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>group</th>
+      <th>date</th>
+      <th>stock</th>
+      <th>market_category</th>
+      <th>traded_value_in_eur</th>
+      <th>symbol</th>
+      <th>isin</th>
+      <th>turnover_outside_regular_hours</th>
+      <th>value_traded_above_lisin_eur</th>
+      <th>exchange</th>
+      <th>...</th>
+      <th>currency</th>
+      <th>trade_count</th>
+      <th>turnover_of_trades_above_listhreshold_regular_hours</th>
+      <th>threshold</th>
+      <th>trade_time</th>
+      <th>traded_value_in_local_ccy</th>
+      <th>capped</th>
+      <th>local_code</th>
+      <th>trade_category</th>
+      <th>trade_size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Cboe Europe</td>
+      <td>2020-05-11</td>
+      <td>Nokia Corp</td>
+      <td>On Exchange</td>
+      <td>10495.5088</td>
+      <td>NOKIAh.BTE</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>Cboe BXE</td>
+      <td>...</td>
+      <td>EUR</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>650000.0</td>
+      <td>01:00:00</td>
+      <td>10495.5088</td>
+      <td>0</td>
+      <td>NOKIAh</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>3182</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>NordicOmx</td>
+      <td>2020-05-11</td>
+      <td>Nokia Corp</td>
+      <td>Off Exchange</td>
+      <td>11883.3000</td>
+      <td>NOKIA.HE</td>
+      <td>FI0009000681</td>
+      <td>11883.3</td>
+      <td>0.0</td>
+      <td>NordicOmx</td>
+      <td>...</td>
+      <td>EUR</td>
+      <td>2</td>
+      <td>0.0</td>
+      <td>650000.0</td>
+      <td>07:05:00</td>
+      <td>11883.3000</td>
+      <td>0</td>
+      <td>NOKIA</td>
+      <td>Off-Exchange/OTC</td>
+      <td>3575</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Sigma X MTF</td>
+      <td>2020-05-11</td>
+      <td>Nokia Corp</td>
+      <td>On Exchange</td>
+      <td>8016.2187</td>
+      <td>NOKIAh.SGMX</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>Sigma X MTF</td>
+      <td>...</td>
+      <td>EUR</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>650000.0</td>
+      <td>07:10:00</td>
+      <td>8016.2187</td>
+      <td>0</td>
+      <td>NOKIAh</td>
+      <td>Lit/Auction Periodic</td>
+      <td>2401</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Cboe Europe</td>
+      <td>2020-05-11</td>
+      <td>Nokia Corp</td>
+      <td>On Exchange</td>
+      <td>31047.2271</td>
+      <td>NOKIAh.BTE</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>Cboe BXE</td>
+      <td>...</td>
+      <td>EUR</td>
+      <td>5</td>
+      <td>0.0</td>
+      <td>650000.0</td>
+      <td>08:00:00</td>
+      <td>31047.2271</td>
+      <td>0</td>
+      <td>NOKIAh</td>
+      <td>Lit/Auction Periodic</td>
+      <td>9338</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Cboe Europe</td>
+      <td>2020-05-11</td>
+      <td>Nokia Corp</td>
+      <td>On Exchange</td>
+      <td>26081.3380</td>
+      <td>NOKIAh.BTE</td>
+      <td>FI0009000681</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>Cboe BXE</td>
+      <td>...</td>
+      <td>EUR</td>
+      <td>4</td>
+      <td>0.0</td>
+      <td>650000.0</td>
+      <td>08:00:00</td>
+      <td>26081.3380</td>
+      <td>0</td>
+      <td>NOKIAh</td>
+      <td>Dark/Order Book</td>
+      <td>7825</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 21 columns</p>
+</div>
+
+
+
+## 1.13 Spread capacity
+
+
+```python
+query_name = 'lcGetSpreadsCapacity'
+query_params = {
+    'isins': ['FI0009000681'],
+    'dateFrom': pd.Timestamp('2020-5-10'),
+    'dateTo': pd.Timestamp('2020-5-20'),
+}
+
+df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
+df.head()
+```
+
+
+
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>group</th>
+      <th>bid_value</th>
+      <th>ask_value</th>
+      <th>bps</th>
+      <th>date</th>
+      <th>ob_presence_ask</th>
+      <th>ob_presence_bid</th>
+      <th>stock</th>
+      <th>symbol</th>
+      <th>isin</th>
+      <th>bid_size</th>
+      <th>ask_size</th>
+      <th>spread_presence_bid</th>
+      <th>spread_presence_ask</th>
+      <th>exchange</th>
+      <th>currency</th>
+      <th>local_code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Cboe Europe</td>
+      <td>3673.206656</td>
+      <td>4351.787397</td>
+      <td>0</td>
+      <td>2020-05-11</td>
+      <td>0.999999</td>
+      <td>0.999999</td>
+      <td>Nokia Corp, FI0009000681</td>
+      <td>NOKIAh.BTE</td>
+      <td>FI0009000681</td>
+      <td>1108.434401</td>
+      <td>1311.849966</td>
+      <td>0.999999</td>
+      <td>0.999999</td>
+      <td>Cboe BXE</td>
+      <td>EUR</td>
+      <td>NOKIAh</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cboe Europe</td>
+      <td>12614.172456</td>
+      <td>10776.046678</td>
+      <td>0</td>
+      <td>2020-05-11</td>
+      <td>0.999987</td>
+      <td>0.999988</td>
+      <td>Nokia Corp, FI0009000681</td>
+      <td>NOKIAm.BTE</td>
+      <td>FI0009000681</td>
+      <td>3809.521764</td>
+      <td>3244.436326</td>
+      <td>0.999975</td>
+      <td>0.999975</td>
+      <td>Cboe BXE</td>
+      <td>EUR</td>
+      <td>NOKIAm</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Cboe Europe</td>
+      <td>4846.146065</td>
+      <td>6450.678880</td>
+      <td>10</td>
+      <td>2020-05-11</td>
+      <td>0.999999</td>
+      <td>0.999999</td>
+      <td>Nokia Corp, FI0009000681</td>
+      <td>NOKIAh.BTE</td>
+      <td>FI0009000681</td>
+      <td>1463.064035</td>
+      <td>1945.327991</td>
+      <td>0.881725</td>
+      <td>0.881725</td>
+      <td>Cboe BXE</td>
+      <td>EUR</td>
+      <td>NOKIAh</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Cboe Europe</td>
+      <td>21882.427680</td>
+      <td>25980.451846</td>
+      <td>25</td>
+      <td>2020-05-11</td>
+      <td>0.999999</td>
+      <td>0.999999</td>
+      <td>Nokia Corp, FI0009000681</td>
+      <td>NOKIAh.BTE</td>
+      <td>FI0009000681</td>
+      <td>6603.265135</td>
+      <td>7830.678886</td>
+      <td>0.990054</td>
+      <td>0.990054</td>
+      <td>Cboe BXE</td>
+      <td>EUR</td>
+      <td>NOKIAh</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Cboe Europe</td>
+      <td>9410.905243</td>
+      <td>7605.484221</td>
+      <td>25</td>
+      <td>2020-05-11</td>
+      <td>0.999987</td>
+      <td>0.999988</td>
+      <td>Nokia Corp, FI0009000681</td>
+      <td>NOKIAm.BTE</td>
+      <td>FI0009000681</td>
+      <td>2840.318208</td>
+      <td>2287.924193</td>
+      <td>0.131529</td>
+      <td>0.131529</td>
+      <td>Cboe BXE</td>
+      <td>EUR</td>
+      <td>NOKIAm</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+## 1.14 EBBO Size contribution
+
+
+```python
+query_name = 'getEbboSizeContribution'
+query_params = {
+    'isins': ['FI0009000681'],
+    'dateFrom': pd.Timestamp('2020-5-10'),
+    'dateTo': pd.Timestamp('2020-5-20'),
+}
+
+df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
+df.head()
+```
+
+
+
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>stock</th>
+      <th>symbol</th>
+      <th>isin</th>
+      <th>size_contribution_ebbo_both</th>
+      <th>presence_ebb</th>
+      <th>twa_ebovalue</th>
+      <th>exchange</th>
+      <th>index</th>
+      <th>size_contribution_ebb</th>
+      <th>currency</th>
+      <th>...</th>
+      <th>size_contribution_ebbo_any_side</th>
+      <th>primary_exchange_code</th>
+      <th>presence_ebo</th>
+      <th>presence_ebbo_both</th>
+      <th>local_code</th>
+      <th>combined_quote_presence</th>
+      <th>twa_ebbvalue</th>
+      <th>group</th>
+      <th>size_contribution_ebo</th>
+      <th>date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Nokia Corp, FI0009000681</td>
+      <td>NOKIA.HE</td>
+      <td>FI0009000681</td>
+      <td>0.514782</td>
+      <td>0.835671</td>
+      <td>14570.35642</td>
+      <td>NordicOmx</td>
+      <td>FI25</td>
+      <td>0.536410</td>
+      <td>EUR</td>
+      <td>...</td>
+      <td>0.481538</td>
+      <td>H</td>
+      <td>0.915177</td>
+      <td>0.760185</td>
+      <td>NOKIA</td>
+      <td>0.999973</td>
+      <td>18040.695813</td>
+      <td>NordicOmx</td>
+      <td>0.604039</td>
+      <td>2020-05-11</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Nokia Corp, FI0009000681</td>
+      <td>NOKIAh.AQX</td>
+      <td>FI0009000681</td>
+      <td>0.373753</td>
+      <td>0.710271</td>
+      <td>14570.35642</td>
+      <td>Aquis Exchange</td>
+      <td>FI25</td>
+      <td>0.402656</td>
+      <td>EUR</td>
+      <td>...</td>
+      <td>0.337863</td>
+      <td>H</td>
+      <td>0.677287</td>
+      <td>0.431337</td>
+      <td>NOKIAh</td>
+      <td>0.999973</td>
+      <td>18040.695813</td>
+      <td>Aquis Exchange</td>
+      <td>0.466299</td>
+      <td>2020-05-11</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Nokia Corp, FI0009000681</td>
+      <td>NOKIAh.BTE</td>
+      <td>FI0009000681</td>
+      <td>0.096149</td>
+      <td>0.318471</td>
+      <td>14570.35642</td>
+      <td>Cboe BXE</td>
+      <td>FI25</td>
+      <td>0.116584</td>
+      <td>EUR</td>
+      <td>...</td>
+      <td>0.070660</td>
+      <td>H</td>
+      <td>0.157997</td>
+      <td>0.049779</td>
+      <td>NOKIAh</td>
+      <td>0.999973</td>
+      <td>18040.695813</td>
+      <td>Cboe Europe</td>
+      <td>0.136368</td>
+      <td>2020-05-11</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Nokia Corp, FI0009000681</td>
+      <td>NOKIAh.CHIX</td>
+      <td>FI0009000681</td>
+      <td>0.211549</td>
+      <td>0.675756</td>
+      <td>14570.35642</td>
+      <td>Cboe CXE</td>
+      <td>FI25</td>
+      <td>0.309743</td>
+      <td>EUR</td>
+      <td>...</td>
+      <td>0.182713</td>
+      <td>H</td>
+      <td>0.425488</td>
+      <td>0.271610</td>
+      <td>NOKIAh</td>
+      <td>0.999973</td>
+      <td>18040.695813</td>
+      <td>Cboe Europe</td>
+      <td>0.232612</td>
+      <td>2020-05-11</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Nokia Corp, FI0009000681</td>
+      <td>NOKIAh.TU</td>
+      <td>FI0009000681</td>
+      <td>0.110936</td>
+      <td>0.173654</td>
+      <td>14570.35642</td>
+      <td>Turquoise</td>
+      <td>FI25</td>
+      <td>0.111161</td>
+      <td>EUR</td>
+      <td>...</td>
+      <td>0.073420</td>
+      <td>H</td>
+      <td>0.090484</td>
+      <td>0.017105</td>
+      <td>NOKIAh</td>
+      <td>0.999973</td>
+      <td>18040.695813</td>
+      <td>LSE</td>
+      <td>0.120023</td>
+      <td>2020-05-11</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 21 columns</p>
+</div>
+
+
+
 
 ### 2. Index analysis - DE30
 --- 

@@ -9,7 +9,7 @@ folder: xyt
 
 ### 0. Prerequisites
 
-API version: `1.1.1.0`
+API version: `1.1.2.0`
 
 -------------
 
@@ -149,6 +149,7 @@ tick_analytics(
 | datetime               | pd.Timestamp | x         | Requested datetime                           |
 | fields                 | [string]     | x         | List of [fields](#BookSnapshot_field_values) |
 | symbols                | [string]     |           | List of symbols                              |
+| eod_symbol             | string       |           | Symbol for OHLC prints, required if datetime outside Continuous Session |
 
 <br>
 
