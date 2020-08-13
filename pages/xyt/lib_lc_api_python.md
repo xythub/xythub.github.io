@@ -1553,7 +1553,7 @@ df.head()
 </div>
 
 
-## 1.11 Price movement
+### 1.11 Price movement
 
 
 ```python
@@ -1848,7 +1848,7 @@ df.head(13)
 
 
 
-## 1.12 Volume profiles
+### 1.12 Volume profiles
 
 
 ```python
@@ -2022,7 +2022,188 @@ df.head()
 
 
 
-## 1.13 Spread capacity
+### 1.13 Volume profiles for specified index
+
+
+```python
+query_name = 'lcGetVolumeProfileForIndex'
+query_params = {
+    'dateFrom': pd.Timestamp('2020-5-10'),
+    'dateTo': pd.Timestamp('2020-5-11'),
+    'index': 'UK100',                   #index also accepts UNCAPPED or CAPPED as arguments.
+    'mode': ['asof','ISINCurrency'],    #Parameter 'mode' allows for two options: 'asof' and 'recent'.
+                                        #Option 'asof' returns index/list assignment 'as-of' each day in the range, 
+                                        #option 'recent' returns products included in most recent compositions in 
+                                        #the passed date range.
+                                        #Parameter 'mode' may also accept one of options: ISIN/ISINCurrency/PrimaryMTF
+                                        #Parameter 'mode' is optional, but if no argument is given, combination of 
+                                        #options ISIN/recent is set as default.
+}
+
+df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
+df.head()
+```
+
+
+
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>stock</th>
+      <th>market_category</th>
+      <th>traded_value_in_eur</th>
+      <th>symbol</th>
+      <th>isin</th>
+      <th>turnover_outside_regular_hours</th>
+      <th>value_traded_above_lisin_eur</th>
+      <th>exchange</th>
+      <th>addressable_traded_value_in_eur</th>
+      <th>currency</th>
+      <th>...</th>
+      <th>trade_count</th>
+      <th>threshold</th>
+      <th>trade_time</th>
+      <th>traded_value_in_local_ccy</th>
+      <th>capped</th>
+      <th>local_code</th>
+      <th>trade_category</th>
+      <th>trade_size</th>
+      <th>group</th>
+      <th>date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Coca Cola HBC AG</td>
+      <td>On Exchange</td>
+      <td>765.758161</td>
+      <td>CCHl.BTE</td>
+      <td>CH0198251305</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>Cboe BXE</td>
+      <td>765.758161</td>
+      <td>GBX</td>
+      <td>...</td>
+      <td>1</td>
+      <td>42540000.0</td>
+      <td>01:00:00</td>
+      <td>67290.9984</td>
+      <td>0</td>
+      <td>CCHl</td>
+      <td>Off-Book (On-Exchange)</td>
+      <td>36</td>
+      <td>Cboe Europe</td>
+      <td>2020-05-11</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Coca Cola HBC AG</td>
+      <td>On Exchange</td>
+      <td>11238.179232</td>
+      <td>CCHl.CHIX</td>
+      <td>CH0198251305</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>Cboe CXE</td>
+      <td>11238.179232</td>
+      <td>GBX</td>
+      <td>...</td>
+      <td>2</td>
+      <td>42540000.0</td>
+      <td>08:00:00</td>
+      <td>987555.0000</td>
+      <td>0</td>
+      <td>CCHl</td>
+      <td>Lit/Order Book</td>
+      <td>515</td>
+      <td>Cboe Europe</td>
+      <td>2020-05-11</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Coca Cola HBC AG</td>
+      <td>Off Exchange</td>
+      <td>1185.695590</td>
+      <td>CCHl.BXTR</td>
+      <td>CH0198251305</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>Cboe TDM</td>
+      <td>1185.695590</td>
+      <td>GBX</td>
+      <td>...</td>
+      <td>1</td>
+      <td>42540000.0</td>
+      <td>08:00:00</td>
+      <td>104193.0000</td>
+      <td>0</td>
+      <td>CCHl</td>
+      <td>Off-Exchange/SI</td>
+      <td>54</td>
+      <td>Cboe TDM</td>
+      <td>2020-05-11</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Coca Cola HBC AG</td>
+      <td>On Exchange</td>
+      <td>2035.152205</td>
+      <td>CCHl.AQX</td>
+      <td>CH0198251305</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>Aquis Exchange</td>
+      <td>2035.152205</td>
+      <td>GBX</td>
+      <td>...</td>
+      <td>1</td>
+      <td>42540000.0</td>
+      <td>08:00:00</td>
+      <td>178839.0000</td>
+      <td>0</td>
+      <td>CCHl</td>
+      <td>Lit/Order Book</td>
+      <td>93</td>
+      <td>Aquis Exchange</td>
+      <td>2020-05-11</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Coca Cola HBC AG</td>
+      <td>Off Exchange</td>
+      <td>1097.758179</td>
+      <td>CCH.L</td>
+      <td>CH0198251305</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>LSE</td>
+      <td>1097.758179</td>
+      <td>GBX</td>
+      <td>...</td>
+      <td>11</td>
+      <td>42540000.0</td>
+      <td>08:00:00</td>
+      <td>96465.5000</td>
+      <td>0</td>
+      <td>CCH</td>
+      <td>Off-Exchange/OTC</td>
+      <td>50</td>
+      <td>LSE</td>
+      <td>2020-05-11</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 21 columns</p>
+</div>
+
+
+
+### 1.14 Spread capacity
 
 
 ```python
@@ -2171,7 +2352,7 @@ df.head()
 
 
 
-## 1.14 EBBO Size contribution
+### 1.15 EBBO Size contribution
 
 
 ```python
