@@ -174,6 +174,26 @@ entire search result.
 
 For best performance: narrow search criteria using pattern, filters and dates.
 
+Retrieving all items matching the pattern 'post' and iterating over search
+result using paging window of 100 elements:
+
+```
+continueLookup = FALSE
+cursor = NULL
+rows = 0
+
+repeat{
+  lookup <- xythub.lookupSymbols (source = "ACTIV", pattern = "post", pageLimit = 100, cursor = cursor)
+  cursor = lookup$cursor
+  rows = rows + lookup$rowCount
+  continueLookup = !(is.na(cursor) || cursor == '')
+  cat("Rows: ", rows, "/", lookup$totalHits, " Cursor: ", cursor, "\n")
+
+  if (is.na(cursor) || cursor == ''){
+    break
+  }
+}
+```
 
 Retrieving price data
 ---------------------

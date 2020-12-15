@@ -2356,7 +2356,7 @@ df.head()
 
 
 ```python
-query_name = 'getEbboSizeContribution'
+query_name = 'lcGetEbboSizeContribution'
 query_params = {
     'isins': ['FI0009000681'],
     'dateFrom': pd.Timestamp('2020-5-10'),

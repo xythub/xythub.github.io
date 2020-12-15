@@ -162,6 +162,24 @@ entire search result.
 
 For best performance: narrow search criteria using pattern, filters and dates.
 
+Retrieving all items matching the pattern 'post' and iterating over search
+result using paging window of 100 elements:
+
+```
+bool continueLookup;
+String cursor = null;
+long rows = 0;
+do
+{
+    LookupSymbols lookup = client.LookupSymbols("ACTIV", "post", pageLimit: 100, cursor: cursor);
+    cursor = lookup.Cursor;
+    rows += lookup.RowCount;
+    continueLookup = !String.IsNullOrEmpty(cursor);
+
+    Console.WriteLine("Rows: {0}/{1} Cursor: {2}", rows, lookup.TotalHits, cursor);
+} while (continueLookup);
+```
+
 
 Retrieving price data
 ---------------------

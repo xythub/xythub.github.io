@@ -9,7 +9,7 @@ folder: xyt
 
 ### 0. Prerequisites
 
-API version: `1.1.2.0`
+API version: `1.1.8.0`
 
 -------------
 
@@ -319,6 +319,7 @@ tick_analytics(
 | lower_price_limit      | float                  |           | Minimum price                                   |
 | upper_price_limit      | float                  |           | Maximum price                                   |
 | trade_types            | [string]               |           | List of trade types                             |
+| exclude_trade_types    | [string]               |           | List of trade types to exclude                  |
 | split_by_trade_type    | bool                   |           | Split by trade type selection                   |
 | use_last_snapshot      | bool                   |           | Use last snapshot                               |
 | symbols                | [string]               |           | List of symbols                                 |
@@ -332,12 +333,15 @@ tick_analytics(
 | COUNT             | Number of trades              |
 | VOLUME            | Market Volume                 |
 | VALUE             | Market Turnover               |
+| TWAP              | Time weighted average price   |
 | VWAP              | Volume weighted average price |
+| TRADE_DIRECTION   | Trade direction               |
 | FIRST             | First price                   |
-| LAST              | Last price                    |
 | MIN               | Lowest price                  |
 | MAX               | Highest price                 |
-| TTS_MEDIAN        | Trade size median             |
+| LAST              | Last price                    |
+| LAST_TS           | Last trade size               |
+| MEDIAN_TS         | Median trade size             |
 
 <br>
 

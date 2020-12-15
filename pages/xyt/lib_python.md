@@ -198,27 +198,21 @@ entire search result.
 
 For best performance: narrow search criteria using pattern, filters and dates.
 
-Retrieving all items matching the pattern 'post' and iterating over search result using paging window of 100 elements:
+Retrieving all items matching the pattern 'post' and iterating over search
+result using paging window of 100 elements:
 
 ```python
 from xythub import lookup_symbols
 
-search_criteria = dict(source='ACTIV', pattern='post', page_limit=100)
-partial_result = lookup_symbols(**search_criteria)
-print('Total hits matching search criteria %s: %s' % (search_criteria, partial_result.total_hits))
-total = partial_result.total_hits
-rows = partial_result.rows
-cursor = partial_result.cursor
-
-while (partial_result.cursor):
-    print('%.2f%%  %s' % ((rows / total) * 100, cursor))
-    partial_result = lookup_symbols(cursor=cursor, **search_criteria)
-    rows += partial_result.rows
-
-    if cursor == partial_result.cursor:
-        break
-    else:
-        cursor = partial_result.cursor
+continue_search = True
+cursor = None
+rows = 0
+while continue_search:
+    r = lookup_symbols(source="ACTIV", pattern='post', page_limit=100, cursor=cursor)
+    rows += r.rows
+    cursor = r.cursor
+    print('%.2f%%  %s' % ((rows / r.total_hits) * 100, cursor))
+    continue_search = cursor is not None
 ```
 
 Retrieving price data

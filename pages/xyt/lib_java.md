@@ -167,6 +167,23 @@ entire search result.
 
 For best performance: narrow search criteria using pattern, filters and dates.
 
+Retrieving all items matching the pattern 'post' and iterating over search
+result using paging window of 100 elements:
+
+```
+boolean continueLookup;
+String cursor = null;
+long rows = 0;
+do {
+    final SymbolData lookup = client.lookupSymbols("ACTIV", "post", 100, cursor);
+    cursor = lookup.getCursor();
+    rows += lookup.getRowCount();
+    continueLookup = !Strings.isNullOrEmpty(cursor);
+
+    System.out.println(String.format("Rows: %3d/%3d Cursor: %s", rows, lookup.getTotalHits(), cursor));
+} while (continueLookup);
+```
+
 
 Retrieving price data
 ---------------------
