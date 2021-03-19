@@ -28,6 +28,10 @@ entries:
       url: /lib_lc_api_python.html
       output: web
 
+    - title: LC API R introduction
+      url: /lib_lc_api_r.html
+      output: web
+
   - title: TCA API
     output: web
     folderitems:

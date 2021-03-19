@@ -1,16 +1,16 @@
 ---
-title: Accessing data from Python
+title: Accessing data from R
 keywords: python, sample, data access, Liquidity Cockpit, big xyt, big-xyt, documentation, API documentation, API, single API, tick data
 summary: "This is the API documentation for LC API Python package."
 sidebar: xyt_sidebar
-permalink: lib_lc_api_python.html
+permalink: lib_lc_api_r.html
 folder: xyt
 ---
 
 [www_lc]: https://liquidity-cockpit.com
 [www_lc_doc]: https://liquidity-cockpit.com/app/methodology
 
-big xyt Liquidity Cockpit Python API
+big xyt Liquidity Cockpit R API
 ---------
 Official webpage: [https://liquidity-cockpit.com][www_lc]{:target="_blank"}
 
@@ -19,34 +19,40 @@ Official Liquidity Cockpit Documentation: [https://liquidity-cockpit.com/app/met
 ### 0.0. Library imports
 
 
-```python
-import pandas as pd
+```r
+library(xythub)
 
+library(knitr)
+library(rmdformats)
+library(tidyverse)
+library(glue)
 
-from xythub import ApiSettings, XytClient, get
+opts_chunk$set(message = FALSE)
+opts_chunk$set(warning = FALSE)
+
+options(max.print = "75")
+opts_knit$set(width = 75)
 ```
 
 ### 0.1. API credentials
 
 
-```python
-ApiSettings.user_id='YOUR_USER_NAME'
-ApiSettings.user_password='YOUR_PASSWORD'
+```r
+credentials <- Sys.getenv(c("API_USERNAME", "API_PWD"))
+if (is.null(xythub:::xythub.env$username)) xythub.configure(username = credentials["API_USERNAME"], password = credentials["API_PWD"])
 ```
 
 ### 1.0. Symbols lookup
 
 
-```python
+```r
 query_name = 'lcGetIsinList'
-query_params = {
-    'dateFrom': pd.Timestamp('2019-10-2'),
-    'dateTo': pd.Timestamp('2019-10-5'),
-}
+query_params = c(xythub.toParameter('dateFrom', xythub.toDateValue('2019-10-02')),
+                 xythub.toParameter('dateTo', xythub.toDateValue('2019-10-05'))
+                 )
 
-df = get(source='LC', endpoint='lcGetIsinList', **query_params).to_pandas()
-# Limit the number of rows to 5
-df.head(5)
+lcGetIsinList = xythub::xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetIsinList$data %>% head()
 ```
 
 
@@ -88,16 +94,15 @@ df.head(5)
 ### 1.1. Market share statistics
 
 
-```python
+```r
 query_name = 'lcGetMarketShare'
-query_params = {
-    'isins': ['DE000A1EWWW0'],
-    'dateFrom': pd.Timestamp('2019-10-2'),
-    'dateTo': pd.Timestamp('2019-10-24'),
-}
+query_params = c(xythub.toParameter("isins", xythub.toStringValue('DE000A1EWWW0', forceList = TRUE)),
+                 xythub.toParameter("dateFrom", xythub.toDateValue('2019-10-02')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2019-10-24'))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head() # Limit the number of rows to 5
+lcGetMarketShare = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetMarketShare$data %>% head()
 ```
 
 
@@ -253,16 +258,15 @@ df.head() # Limit the number of rows to 5
 ### 1.2. Market share systematic internalizer statistics
 
 
-```python
+```r
 query_name = 'lcGetSiMarketShare'
-query_params = {
-    'isins': ['DE000A1EWWW0'],
-    'dateFrom': pd.Timestamp('2019-10-2'),
-    'dateTo': pd.Timestamp('2019-10-24'),
-}
+query_params = c(xythub.toParameter("isins", xythub.toStringValue('DE000A1EWWW0', forceList = TRUE)),
+                 xythub.toParameter("dateFrom", xythub.toDateValue('2019-10-02')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2019-10-24'))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head() # Limit the number of rows to 5
+lcGetSiMarketShare = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetSiMarketShare$data %>% head()
 ```
 
 
@@ -406,16 +410,15 @@ df.head() # Limit the number of rows to 5
 ### 1.3. Market share statistics alternative closing mechanisms
 
 
-```python
+```r
 query_name = 'lcGetClosingMechanismsMarketShare'
-query_params = {
-    'isins': ['DE000A1EWWW0'],
-    'dateFrom': pd.Timestamp('2019-10-2'),
-    'dateTo': pd.Timestamp('2019-10-24'),
-}
+query_params = c(xythub.toParameter("isins", xythub.toStringValue('DE000A1EWWW0', forceList = TRUE)),
+                 xythub.toParameter("dateFrom", xythub.toDateValue('2019-10-02')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2019-10-24'))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head() # Limit the number of rows to 5
+lcGetClosingMechanismsMarketShare = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetClosingMechanismsMarketShare$data %>% head()
 ```
 
 
@@ -535,15 +538,14 @@ df.head() # Limit the number of rows to 5
 ### 1.4. Market share statistics grouped by index
 
 
-```python
+```r
 query_name = 'lcGetMarketShareMonthlyStatsByIndex'
-query_params = {
-    'dateFrom': pd.Timestamp('2019-10-2'),
-    'dateTo': pd.Timestamp('2019-10-24'),
-}
+query_params = c(xythub.toParameter("dateFrom", xythub.toDateValue('2019-10-02')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2019-10-24'))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head()
+lcGetMarketShareMonthlyStatsByIndex = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetMarketShareMonthlyStatsByIndex$data %>% head()
 ```
 
 
@@ -641,18 +643,15 @@ df.head()
 </div>
 
 
-
 ### 1.5. Market share statistics grouped by exchange and trade category
 
 
-```python
+```r
 query_name = 'lcGetMarketShareByExchangeTradeCategory'
-query_params = {
-    'day': pd.Timestamp('2019-10-2'),
-}
+query_params = xythub.toParameter("day", xythub.toDateValue('2019-10-02'))
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head()
+lcGetMarketShareByExchangeTradeCategory = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetMarketShareByExchangeTradeCategory$data %>% head()
 ```
 
 
@@ -748,23 +747,16 @@ df.head()
 ### 1.6. Market share statistics for specified index
 
 
-```python
+```r
 query_name = 'lcGetMarketShareForIndex'
-query_params = {
-    'dateFrom': pd.Timestamp('2019-10-2'),
-    'dateTo': pd.Timestamp('2019-10-24'),
-    'index': 'UK100',                   #index also accepts UNCAPPED or CAPPED as arguments.
-    'mode': ['asof','ISINCurrency'],    #Parameter 'mode' allows for two options: 'asof' and 'recent'.
-                                        #Option 'asof' returns index/list assignment 'as-of' each day in the range,
-                                        #option 'recent' returns products included in most recent compositions in
-                                        #the passed date range.
-                                        #Parameter 'mode' may also accept one of options: ISIN/ISINCurrency/PrimaryMTF
-                                        #Parameter 'mode' is optional, but if no argument is given, combination of
-                                        #options ISIN/recent is set as default.
-}
+query_params = c(xythub.toParameter("dateFrom", xythub.toDateValue('2019-10-02')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2019-10-24')),
+                 xythub.toParameter(name = "index", value = "UK100"),
+                 xythub.toParameter(name = "mode", value = c("asof", "ISINCurrency"))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head()
+lcGetMarketShareForIndex = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetMarketShareForIndex$data %>% head()
 ```
 
 
@@ -920,16 +912,15 @@ df.head()
 ### 1.7. Effective spreads
 
 
-```python
+```r
 query_name = 'lcGetSpreads'
-query_params = {
-    'isins': ['DE0005501357','NL0000235190'],
-    'dateFrom': pd.Timestamp('2019-10-2'),
-    'dateTo': pd.Timestamp('2019-10-24'),
-}
+query_params = c(xythub.toParameter("isins", c('DE000A1EWWW0', 'NL0000235190')),
+                 xythub.toParameter("dateFrom", xythub.toDateValue('2019-10-02')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2019-10-24'))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head()
+lcGetSpreads = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetSpreads$data %>% head()
 ```
 
 
@@ -1092,23 +1083,16 @@ df.head()
 ### 1.8. Effective spreads statistics for specified index
 
 
-```python
+```r
 query_name = 'lcGetSpreadsForIndex'
-query_params = {
-    'dateFrom': pd.Timestamp('2019-10-2'),
-    'dateTo': pd.Timestamp('2019-10-24'),
-    'index': 'UK100',                   
-    'mode': ['asof','ISINCurrency'],    #Parameter 'mode' allows for two options: 'asof' and 'recent'.
-                                        #Option 'asof' returns index/list assignment 'as-of' each day in the range,
-                                        #option 'recent' returns products included in most recent compositions in
-                                        #the passed date range.
-                                        #Parameter 'mode' may also accept one of options: ISIN/ISINCurrency/PrimaryMTF
-                                        #Parameter 'mode' is optional, but if no argument is given, combination of
-                                        #options ISIN/recent is set as default.
-}
+query_params = c(xythub.toParameter("dateFrom", xythub.toDateValue('2019-10-02')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2019-10-24')),
+                 xythub.toParameter(name = "index", value = "UK100"),
+                 xythub.toParameter(name = "mode", value = c("asof", "ISINCurrency"))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head()
+lcGetSpreadsForIndex = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetSpreadsForIndex$data %>% head()
 ```
 
 
@@ -1271,16 +1255,15 @@ df.head()
 ### 1.9.  EBB, EBO by ISIN and Currency
 
 
-```python
+```r
 query_name = 'lcGetBestPrices'
-query_params = {
-    'isins': ['DE0005501357'],
-    'dateFrom': pd.Timestamp('2019-10-2'),
-    'dateTo': pd.Timestamp('2019-10-24'),
-}
+query_params = c(xythub.toParameter("isins", 'DE0005501357'),
+                 xythub.toParameter("dateFrom", xythub.toDateValue('2019-10-02')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2019-10-24'))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head()
+lcGetBestPrices = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetBestPrices$data %>% head()
 ```
 
 
@@ -1400,16 +1383,15 @@ df.head()
 ### 1.10. EBB, EBO by Primary Exchange + MTFs
 
 
-```python
+```r
 query_name = 'lcGetBestPricesPrimaryExchange'
-query_params = {
-    'isins': ['DE0005501357'],
-    'dateFrom': pd.Timestamp('2019-10-2'),
-    'dateTo': pd.Timestamp('2019-10-24'),
-}
+query_params = c(xythub.toParameter("isins", 'DE0005501357'),
+                 xythub.toParameter("dateFrom", xythub.toDateValue('2019-10-02')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2019-10-24'))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head()
+lcGetBestPricesPrimaryExchange = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetBestPricesPrimaryExchange$data %>% head()
 ```
 
 
@@ -1534,16 +1516,15 @@ df.head()
 ### 1.11 Price movement
 
 
-```python
+```r
 query_name = 'lcGetPriceMovement'
-query_params = {
-    'isins': ['FI0009000681'],
-    'dateFrom': pd.Timestamp('2020-5-10'),
-    'dateTo': pd.Timestamp('2020-5-20'),
-}
+query_params = c(xythub.toParameter("isins", 'FI0009000681'),
+                 xythub.toParameter("dateFrom", xythub.toDateValue('2020-05-10')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2020-05-20'))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head(13)
+lcGetPriceMovement = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetPriceMovement$data %>% head()
 ```
 
 
@@ -1827,16 +1808,15 @@ df.head(13)
 ### 1.12 Volume profiles
 
 
-```python
+```r
 query_name = 'lcGetVolumeProfile'
-query_params = {
-    'isins': ['FI0009000681'],
-    'dateFrom': pd.Timestamp('2020-5-10'),
-    'dateTo': pd.Timestamp('2020-5-20'),
-}
+query_params = c(xythub.toParameter("isins", 'FI0009000681'),
+                 xythub.toParameter("dateFrom", xythub.toDateValue('2020-05-10')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2020-05-20'))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head()
+lcGetVolumeProfile = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetVolumeProfile$data %>% head()
 ```
 
 
@@ -1999,23 +1979,16 @@ df.head()
 ### 1.13 Volume profiles for specified index
 
 
-```python
+```r
 query_name = 'lcGetVolumeProfileForIndex'
-query_params = {
-    'dateFrom': pd.Timestamp('2020-5-10'),
-    'dateTo': pd.Timestamp('2020-5-11'),
-    'index': 'UK100',                   #index also accepts UNCAPPED or CAPPED as arguments.
-    'mode': ['asof','ISINCurrency'],    #Parameter 'mode' allows for two options: 'asof' and 'recent'.
-                                        #Option 'asof' returns index/list assignment 'as-of' each day in the range,
-                                        #option 'recent' returns products included in most recent compositions in
-                                        #the passed date range.
-                                        #Parameter 'mode' may also accept one of options: ISIN/ISINCurrency/PrimaryMTF
-                                        #Parameter 'mode' is optional, but if no argument is given, combination of
-                                        #options ISIN/recent is set as default.
-}
+query_params = c(xythub.toParameter("dateFrom", xythub.toDateValue('2020-05-10')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2020-05-11')),
+                 xythub.toParameter(name = "index", value = "UK100"),
+                 xythub.toParameter(name = "mode", value = c("asof", "ISINCurrency"))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head()
+lcGetVolumeProfileForIndex = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetVolumeProfileForIndex$data %>% head()
 ```
 
 
@@ -2178,16 +2151,15 @@ df.head()
 ### 1.14 Spread capacity
 
 
-```python
+```r
 query_name = 'lcGetSpreadsCapacity'
-query_params = {
-    'isins': ['FI0009000681'],
-    'dateFrom': pd.Timestamp('2020-5-10'),
-    'dateTo': pd.Timestamp('2020-5-20'),
-}
+query_params = c(xythub.toParameter("isins", 'FI0009000681'),
+                 xythub.toParameter("dateFrom", xythub.toDateValue('2020-05-10')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2020-05-20'))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head()
+lcGetSpreadsCapacity = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetSpreadsCapacity$data %>% head()
 ```
 
 
@@ -2325,16 +2297,15 @@ df.head()
 ### 1.15 EBBO Size contribution
 
 
-```python
+```r
 query_name = 'lcGetEbboSizeContribution'
-query_params = {
-    'isins': ['FI0009000681'],
-    'dateFrom': pd.Timestamp('2020-5-10'),
-    'dateTo': pd.Timestamp('2020-5-20'),
-}
+query_params = c(xythub.toParameter("isins", 'FI0009000681'),
+                 xythub.toParameter("dateFrom", xythub.toDateValue('2020-05-10')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2020-05-20'))
+                 )
 
-df = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-df.head()
+lcGetEbboSizeContribution = xythub.getData(source = "LC", endpoint = query_name, parameters = query_params)
+lcGetEbboSizeContribution$data %>% head()
 ```
 
 
@@ -2493,8 +2464,6 @@ df.head()
 </div>
 
 
-
-
 ### 2. Index analysis - DE30
 ---
 
@@ -2503,14 +2472,15 @@ DE30 Index analysis
 ### 2.0. Index compositions
 
 
-```python
-query_name = 'getIndexCompositions'
-query_params = {
-    'date': pd.Timestamp('2019-10-2')
-}
-index_comp = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-print("Available indices: " + ", ".join(index_comp['index'].unique().tolist()))
-de30_idx_comp = index_comp[index_comp['index'] == 'DE30']
+```r
+query_name = "getIndexCompositions"
+query_params = xythub.toParameter(name="date", value=as.Date("2020-10-30"))
+
+indexcomp = xythub.getData(source="LC", endpoint = query_name, parameters = query_params)$data
+indices = str_c(indexcomp$index %>% unique(), collapse = ", ")
+print(glue("Available indices: {indices}"))
+
+de30_idx_comp = indexcomp %>% filter(index == 'DE30')
 de30_idx_comp
 ```
 
@@ -2780,16 +2750,15 @@ de30_idx_comp
 ### 2.1. Daily market statistics for DE30 Index
 
 
-```python
-query_name = 'lcGetMarketShare'
-query_params = {
-    'isins': de30_idx_comp['isin'].tolist(),
-    'dateFrom': pd.Timestamp('2019-9-2'),
-    'dateTo': pd.Timestamp('2019-10-24'),
-}
+```r
+query_name = "lcGetMarketShare"
+query_params = c(xythub.toParameter("isins", de30_idx_comp$isin),
+                 xythub.toParameter("dateFrom", xythub.toDateValue('2020-05-10')),
+                 xythub.toParameter("dateTo", xythub.toDateValue('2020-05-20'))
+                 )
 
-de30_market_shares = get(source='LC', endpoint=query_name, **query_params).to_pandas()
-de30_market_shares.head()
+de30_market_shares = xythub.getData(source="LC", endpoint = query_name, parameters = query_params)$data
+de30_market_shares %>% head()
 ```
 
 
@@ -2935,118 +2904,6 @@ de30_market_shares.head()
       <td>DBKd.AQX</td>
       <td>DE0005140008</td>
       <td>0.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-### 2.1.1 Traded volume (in million) by month
-
-
-```python
-de30_market_shares.groupby(by=de30_market_shares.date.dt.month)['traded_value_in_eur'].sum().divide(1e6).round().reset_index()
-```
-
-
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>date</th>
-      <th>traded_value_in_eur</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>9</td>
-      <td>189690.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>10</td>
-      <td>167872.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-### 2.1.2 Traded volume (in million) by month and trade category
-
-
-```python
-de30_summary = de30_market_shares.groupby(
-    by=[de30_market_shares.date.dt.month, 'trade_category']
-)['traded_value_in_eur'].sum().divide(1e6).round().reset_index()
-de30_summary.pivot(index='date', columns='trade_category', values='traded_value_in_eur')
-```
-
-
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>trade_category</th>
-      <th>Dark/IOI Negotiation</th>
-      <th>Dark/Order Book</th>
-      <th>Lit/Auction Closing</th>
-      <th>Lit/Auction Intraday</th>
-      <th>Lit/Auction Opening</th>
-      <th>Lit/Auction Other</th>
-      <th>Lit/Auction Periodic</th>
-      <th>Lit/Order Book</th>
-      <th>Off-Book (On-Exchange)</th>
-      <th>Off-Exchange/OTC</th>
-      <th>Off-Exchange/SI</th>
-    </tr>
-    <tr>
-      <th>date</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>9</th>
-      <td>594.0</td>
-      <td>6059.0</td>
-      <td>22768.0</td>
-      <td>1334.0</td>
-      <td>537.0</td>
-      <td>5.0</td>
-      <td>2028.0</td>
-      <td>61899.0</td>
-      <td>16751.0</td>
-      <td>34141.0</td>
-      <td>43573.0</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>565.0</td>
-      <td>7090.0</td>
-      <td>18806.0</td>
-      <td>384.0</td>
-      <td>649.0</td>
-      <td>83.0</td>
-      <td>2082.0</td>
-      <td>59439.0</td>
-      <td>15221.0</td>
-      <td>28252.0</td>
-      <td>35300.0</td>
     </tr>
   </tbody>
 </table>
