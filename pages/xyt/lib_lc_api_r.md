@@ -22,16 +22,8 @@ Official Liquidity Cockpit Documentation: [https://liquidity-cockpit.com/app/met
 ```r
 library(xythub)
 
-library(knitr)
-library(rmdformats)
 library(tidyverse)
 library(glue)
-
-opts_chunk$set(message = FALSE)
-opts_chunk$set(warning = FALSE)
-
-options(max.print = "75")
-opts_knit$set(width = 75)
 ```
 
 ### 0.1. API credentials
