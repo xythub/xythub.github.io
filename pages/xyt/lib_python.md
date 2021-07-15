@@ -30,6 +30,14 @@ ApiSettings.user_id = USERNAME
 ApiSettings.user_password = PASSWORD
 ```
 
+Alternatively API keys can be used instead of passwords for authentication:
+
+```python
+from xythub import ApiSettings
+
+ApiSettings.user_id = USERNAME
+ApiSettings.api_key = API_KEY_ID
+```
 
 Data representation
 -------------------
@@ -55,6 +63,12 @@ If required this can be replaced to `NaN` (with column type promotion):
 import numpy as np
 
 data.to_pandas().replace(-9223372036854775808, np.nan).to_csv(index=False)
+```
+
+This can be also achieved by changing the default configuration in `ApiSettings.replace_int_nulls`:
+```python
+ApiSettings.replace_int_nulls = True
+data.to_pandas().to_csv(index=False)
 ```
 
 
@@ -604,11 +618,12 @@ reference = reference_data(source='ACTIV', symbols=['DBK.XE'], day='2016.09.01')
 
 #### Input parameters
 
-| Parameter     | Type                    | Required  | Description                                 |
-|---------------|-------------------------|-----------|---------------------------------------------|
-| source        | string                  | x         | Data source.                                |
-| symbols       | [string]                | x         | List of symbols.                            |
-| day           | pd.Timestamp / string   | x         | Requested day.                              |
+| Parameter       | Type                    | Required  | Description                                 |
+|-----------------|-------------------------|-----------|---------------------------------------------|
+| source          | string                  | x         | Data source.                                |
+| symbols         | [string]                | x         | List of symbols.                            |
+| day             | pd.Timestamp / string   | x         | Requested day.                              |
+| instrument_type | string                  |           | Type of the instrument.                     |
 
 #### Output columns
 
@@ -861,6 +876,25 @@ Development
 
 If you wish to work on local development please clone/fork the git repo
 and use: `pip install -r requirements.txt` to setup the project.
+
+### Diagnostics
+
+The library provides an utility function which collects diagnostic information about runtime environment and
+verifies basic connectivity with the API service:
+
+```python
+from xythub import ApiSettings
+
+ApiSettings.user_id = USERNAME
+ApiSettings.user_password = PASSWORD
+...
+
+connection = XytClient.default()
+connection.check()
+```
+
+Diagnostic information is printed to console and saved to a file (`xyt-py-VERSION-TIMESTAMP.info`).
+
 
 ### Protobuf generation
 

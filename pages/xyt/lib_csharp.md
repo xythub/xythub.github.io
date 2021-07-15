@@ -26,6 +26,12 @@ The API client support authentication via password:
 XytHubClient client = new XytHubClient(USERNAME, password: PASSWORD);
 ```
 
+or via API key:
+
+```
+XytHubClient client = new XytHubClient(USERNAME, apiKey: API_KEY_ID);
+```
+
 
 Browsing data catalogue
 -----------------------
@@ -586,11 +592,12 @@ var reference = client.ReferenceData("SOURCE", symbols, day: new DateTime(2016, 
 
 #### Input parameters
 
-| Parameter     | Type            | Required  | Description                                         |
-|---------------|-----------------|-----------|-----------------------------------------------------|
-| source        | String          | x         | Data source.                                        |
-| symbols       | List\<String\>  | x         | List of symbols.                                    |
-| day           | DateTime        | x         | Requested day.                                      |
+| Parameter      | Type            | Required  | Description                                         |
+|----------------|-----------------|-----------|-----------------------------------------------------|
+| source         | String          | x         | Data source.                                        |
+| symbols        | List\<String\>  | x         | List of symbols.                                    |
+| day            | DateTime        | x         | Requested day.                                      |
+| instrumentType | String          | x         | Type of the instrument.                             |
 
 #### Output columns
 
@@ -800,6 +807,18 @@ Output columns are dependent on the selected request.
 
 Troubleshooting
 ---------------
+
+### Diagnostics
+
+The library provides an utility function which collects diagnostic information about runtime environment and
+verifies basic connectivity with the API service:
+
+```
+var client = new XytHubClient(USERNAME, PASSWORD, ...);
+client.Check();
+```
+
+Diagnostic information is printed to console and saved to a file (`xyt-csharp-VERSION-TIMESTAMP.info`).
 
 ### Proxies
 

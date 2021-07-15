@@ -29,6 +29,13 @@ library("xythub")
 xythub.configure(USERNAME, password = PASSWORD)
 ```
 
+Alternatively API keys can be used instead of passwords for authentication:
+
+```
+library("xythub")
+xythub.configure(USERNAME, api_key = API_KEY_ID)
+```
+
 
 Data representation
 -------------------
@@ -194,6 +201,7 @@ repeat{
   }
 }
 ```
+
 
 Retrieving price data
 ---------------------
@@ -530,16 +538,18 @@ Retrieves reference data for given symbols and date.
 Note searching by pattern and retrieval of basing reference data is possible via lookupSymbols method.
 
 ```
-referenceData <- xythub.getReferenceData(source = "ACTIV", symbols = "ZALd.BTE", day = "2016-09-01")
+referenceData <- xythub.getReferenceData(source = "ACTIV", symbols = "ZALd.BTE", firstDay = "2016-09-01", lastDay = "2016-09-01")
 ```
 
 #### Input parameters
 
-| Parameter     | Type                | Required  | Description                                |
-|---------------|---------------------|-----------|--------------------------------------------|
-| source        | character           | x         | Data source.                               |
-| symbols       | character           | x         | List of symbols.                           |
-| day           | POSIXlt / character | x         | Requested day.                             |
+| Parameter       | Type                | Required  | Description                                |
+|-----------------|---------------------|-----------|--------------------------------------------|
+| source          | character           | x         | Data source.                               |
+| symbols         | character           | x         | List of symbols.                           |
+| firstDay        | POSIXlt / character | x         | First requested day.                       |
+| lastDay         | POSIXlt / character | x         | Last requested day.                        |
+| instrument_type | character           |           | Type of the instrument.                    |
 
 #### Output columns
 
@@ -725,6 +735,20 @@ Output columns are dependent on the selected request.
 
 Troubleshooting
 ---------------
+
+### Diagnostics
+
+The library provides an utility function which collects diagnostic information about runtime environment and
+verifies basic connectivity with the API service:
+
+```
+library(xythub)
+
+xythub.configure(username, password, ...)
+xythub.check()
+```
+
+Diagnostic information is printed to console and saved to a file (`xyt-r-VERSION-TIMESTAMP.info`).
 
 ### Proxies
 

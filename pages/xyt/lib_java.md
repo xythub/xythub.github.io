@@ -32,6 +32,12 @@ The API client support authentication via password:
 XytHubClient client = XytHubClientBuilder.builder().withUsername(USERNAME).withPassword(PASSWORD).build();
 ```
 
+or via API key:
+
+```
+XytHubClient client = XytHubClientBuilder.builder().withUsername(USERNAME).withApiKey(API_KEY).build();
+```
+
 
 Browsing data catalogue
 -----------------------
@@ -41,7 +47,7 @@ Browsing data catalogue
 Listing of available sources:
 
 ```
-SourceData sources = client.lookupSources();
+SourceData sources = client.sources().fetch();
 ```
 
 #### Output columns
@@ -57,7 +63,7 @@ Retrieving overview of exchanges on given data source.
 Listing all available exchanges:
 
 ```
-ExchangeData allExchanges = client.lookupExchanges("ACTIV");
+ExchangeData allExchanges = client.lookupExchanges().source("ACTIV").fetch();
 ```
 
 #### Input parameters
@@ -65,7 +71,7 @@ ExchangeData allExchanges = client.lookupExchanges("ACTIV");
 | Parameter       | Type            | Required  | Description                                                     |
 |-----------------|-----------------|-----------|-----------------------------------------------------------------|
 | source          | String          | x         | Data source.                                                    |
-| exchangeFilters | List\<String\>  |           | List of exchanges.                                              |
+| exchanges       | List\<String\>  |           | List of exchanges.                                              |
 | firstDay        | Date / String   |           | First day that should be taken into account.                    |
 | lastDay         | Date / String   |           | Last day that should be taken into account.                     |
 
@@ -89,19 +95,19 @@ ExchangeData allExchanges = client.lookupExchanges("ACTIV");
 Looking up symbols on given data source by pattern:
 
 ```
-SymbolData symbols = client.lookupSymbols("ACTIV", "apple");
+SymbolData symbols = client.lookupSymbols().source("ACTIV").pattern("apple").fetch();
 ```
 
 Looking up symbols on given data source by pattern and dates range:
 
 ```
-SymbolData symbols = client.lookupSymbols("ACTIV", "apple", "2016.09.01", "2016.09.02");
+SymbolData symbols = client.lookupSymbols().source("ACTIV").pattern("apple").firstDay("2016.09.01").lastDay("2016.09.01").fetch();
 ```
 
 Looking symbols on given data source:
 
 ```
-SymbolData symbols = client.lookupSymbols("ACTIV");
+SymbolData symbols = client.lookupSymbols().source("ACTIV").fetch();
 ```
 
 
@@ -113,9 +119,9 @@ More advanced search limiting to specific exchanges on the data source and speci
 String pattern = "zal";
 List<String> exchanges = Arrays.asList("XETRA", "BXTR");
 
-SymbolData symbols = client.lookupSymbols("ACTIV", pattern, exchanges,
-                                          new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
-                                          "2016.09.01", "2016.09.02");
+SymbolData symbols = client.lookupSymbols().source("ACTIV").pattern(pattern).exchanges(exchanges)
+                     .firstDay("2016.09.01").lastDay("2016.09.01").fetch();
+
 ```
 
 
@@ -175,7 +181,7 @@ boolean continueLookup;
 String cursor = null;
 long rows = 0;
 do {
-    final SymbolData lookup = client.lookupSymbols("ACTIV", "post", 100, cursor);
+    final SymbolData lookup = client.lookupSymbols().source("ACTIV").pattern("post").limit(100).cursor(cursor).fetch();
     cursor = lookup.getCursor();
     rows += lookup.getRowCount();
     continueLookup = !Strings.isNullOrEmpty(cursor);
@@ -198,9 +204,9 @@ Retrieving all trades (including non-regular) with trade corrections applied:
 List<TickDataFlag> flags = Arrays.asList(TickDataFlag.INCLUDE_NON_REGULAR,
                                          TickDataFlag.INCLUDE_TRADE_CONDITION_INFO);
 
-TickData tickData = client.getTickData("ACTIV", "ZAL.XE", "2016.09.02",
-                                       "09:00:00.000", "09:02:00.000",
-                                       TickDataType.TRADES, flags);
+TickData tickData = client.tickData().source("ACTIV").symbol("ZAL.XE").day("2016.09.02")
+                          .fromTime("09:00:00.000").toTime("09:02:00.000")
+                          .dataType(TickDataType.TRADES).flags(flags).fetch();
 ```
 
 Extracting trade condition mapping from trades:
@@ -212,9 +218,10 @@ TradeConditionData tradeConditions = tickData.getTradeConditions();
 Retrieving quotes:
 
 ```
-TickData quoteData = client.getTickData("ACTIV", "ZAL.XE", "2016.09.02",
-                                        "09:00:00.000", "09:02:00.000",
-                                        TickDataType.QUOTES, new ArrayList<TickDataFlag>());
+TickData quoteData = client.tickData().source("ACTIV").symbol("ZAL.XE").day("2016.09.02")
+                           .fromTime("09:00:00.000").toTime("09:02:00.000")
+                           .dataType(TickDataType.QUOTES).fetch();
+
 ```
 
 Retrieving trades and quotes in one call. Since `TickDataFlag.INCLUDE_TRADE_CONDITION_INFO` is specified in flags trade condition information will be included in the output. It can be retrieved using same logic as in previous example:
@@ -223,9 +230,9 @@ Retrieving trades and quotes in one call. Since `TickDataFlag.INCLUDE_TRADE_COND
 List<TickDataFlag> flags = Arrays.asList(TickDataFlag.INCLUDE_NON_REGULAR,
                                          TickDataFlag.INCLUDE_TRADE_CONDITION_INFO);
 
-TickData taqData = client.getTickData("ACTIV", "ZAL.XE", "2016.09.02",
-                                      "09:00:00.000", "09:02:00.000",
-                                      TickDataType.TRADES_AND_QUOTES, flags);
+TickData taqkData = client.tickData().source("ACTIV").symbol("ZAL.XE").day("2016.09.02")
+                          .fromTime("09:00:00.000").toTime("09:02:00.000")
+                          .dataType(TickDataType.TRADES_AND_QUOTES).flags(flags).fetch();
 ```
 
 #### Input parameters
@@ -292,25 +299,26 @@ List<TickDataFlag> flags = Arrays.asList(TickDataFlag.INCLUDE_NON_REGULAR,
 // get hourly aggregated data
 int binSizeInSeconds = 3600;
 
-TickAggregatedData tickAggregated = client.getTickAggregated("ACTIV", "CL/17U.NXG", "2017.08.16",
-                                                             binSizeInSeconds, TickDataType.TRADES, flags);
+TickAggregatedData tickAggregated = client.tickAggregated().source("ACTIV").symbol("VOD.L")
+                                          .day("2017.08.16").binSizeInSeconds(binSizeInSeconds).dataType(TickDataType.TRADES)
+                                          .flags(flags).fetch();
 ```
 
 Retrieving quotes aggregated in 15 minute intervals:
 
 ```
 int binSizeInSeconds = 900; // 15 minutes
-TickAggregatedData quotesAggregated = client.getTickAggregated("ACTIV", "CL/17U.NXG", "2017.08.16",
-                                                               binSizeInSeconds, TickDataType.QUOTES,
-                                                               new ArrayList<TickDataFlag>());
+TickAggregatedData quotesAggregated = client.tickAggregated().source("ACTIV").symbol("VOD.L")
+                                            .day("2017.08.16").binSizeInSeconds(binSizeInSeconds).dataType(TickDataType.TRADES)
+                                            .flags(flags).fetch();
 ```
 
 Retrieving trades and quotes in one minute bins:
 
 ```
 // use default flags (EXCLUDE_CANCELLED_TRADES, USE_MARKT_TS, INCLUDE_NON_REGULAR) and default one-minute binning
-TickAggregatedData taqAggregated = client.getTickAggregated("ACTIV", "CL/17U.NXG", "2017.08.16",
-                                                            TickDataType.TRADES_AND_QUOTES);
+TickAggregatedData taqAggregated = client.tickAggregated().source("ACTIV").symbol("VOD.L")
+                                        .day("2017.08.16").dataType(TickDataType.TRADES_AND_QUOTES).fetch();
 ```
 
 #### Input parameters
@@ -355,39 +363,38 @@ Retrieves snapshot of tick data (trades, quote, trades and quotes) for given sym
 Retrieving trade snapshot at 12:00:00.00:
 
 ```
-List<String> symbols = Arrays.asList("CL/17U.NXG");
+List<String> symbols = Arrays.asList("VOD.L");
 
 List<TickDataFlag> flags = Arrays.asList(TickDataFlag.INCLUDE_NON_REGULAR,
                                          TickDataFlag.USE_MARKET_TS);
 
-TickSnapshotData tradeSnapshot = client.getTickSnapshot("ACTIV", symbols,
-                                                        "2017.08.16", "12:00:00.000",
-                                                        TickDataType.TRADES, flags);
+TickSnapshotData tradeSnapshot = client.tickSnapshot().source("ACTIV").symbols(symbols)
+                                       .day("2017.08.16").time("12:00:00.000")
+                                       .dataType(TickDataType.TRADES).flags(flags).fetch();
 ```
 
 Retrieving quote snapshot at 09:15:00:
 
 ```
-List<String> symbols = Arrays.asList("CL/17U.NXG");
+List<String> symbols = Arrays.asList("VOD.L");
 
-List<TickDataFlag> flags = new ArrayList<TickDataFlag>();
-
-TickSnapshotData quoteSnapshot = client.getTickSnapshot("ACTIV", symbols,
-                                                        "2017.08.16", "09:15:00.000",
-                                                        TickDataType.QUOTES, flags);
+TickSnapshotData quoteSnapshot = client.tickSnapshot().source("ACTIV").symbols(symbols)
+                                       .day("2017.08.16").time("09:15:00.000")
+                                       .dataType(TickDataType.QUOTES).fetch();
 ```
 
 Retrieving trade and quote snapshot at 10:03:00:
 
 ```
-List<String> symbols = Arrays.asList("CL/17U.NXG");
+List<String> symbols = Arrays.asList("VOD.L");
 
 List<TickDataFlag> flags = Arrays.asList(TickDataFlag.INCLUDE_NON_REGULAR,
                                          TickDataFlag.USE_MARKET_TS);
 
-TickSnapshotData taqSnapshot = client.getTickSnapshot("ACTIV", symbols,
-                                                      "2017.08.16", "10:03:00.000",
-                                                      TickDataType.TRADES_AND_QUOTES, flags);
+TickSnapshotData taqSnapshot = client.tickSnapshot().source("ACTIV").symbols(symbols)
+                                     .day("2017.08.16").time("10:03:00.000")
+                                     .dataType(TickDataType.TRADES_AND_QUOTES)
+                                     .flags(flags).fetch();
 ```
 
 #### Input parameters
@@ -425,7 +432,8 @@ Retrieves orders (Level 3 data) for given symbols and filtering rules:
 ```
 List<String> symbols = Arrays.asList("DBK.XE");
 
-OrderData orderData = client.getOrderData("ACTIV", symbols, "2016.10.04", "09:00:00.000", "09:01:30.000");
+OrderData orderData = client.orderData().source("ACTIV").symbols(symbols).day("2016.10.04")
+                            .fromTime("09:00:00.000").toTime("09:01:30.000").fetch();
 ```
 
 #### Input parameters
@@ -462,7 +470,7 @@ Retrieves auction for given symbols and filtering rules:
 ```
 List<String> symbols = Arrays.asList("DBK.XE");
 
-AuctionData auctionData = client.getAuctionData("ACTIV", symbols, "2016.10.04");
+AuctionData auctionData = client.auctionData().source("ACTIV").symbols(symbols).day("2016.10.04").fetch();
 ```
 
 #### Input parameters
@@ -502,7 +510,7 @@ Retrieving end of day data:
 ```
 List<String> symbols = Arrays.asList("DBK.XE");
 
-EndOfDayData eodData = client.getEndOfDayData("ACTIV", symbols, "2016.10.04", "2017.10.04");
+EndOfDayData eodData = client.endOfDayData().source("ACTIV").symbols(symbols).firstDay("2016.10.04").lastDay("2017.10.04").fetch();
 ```
 
 #### Input parameters
@@ -512,7 +520,7 @@ EndOfDayData eodData = client.getEndOfDayData("ACTIV", symbols, "2016.10.04", "2
 | source        | String          | x         | Data source.                                  |
 | symbols       | List\<String\>  | x         | List of symbols.                              |
 | firstDay      | Date / String   | x         | First requested day.                          |
-| lastDay        | Date / String   | x         | Last requested day.                           |
+| lastDay       | Date / String   | x         | Last requested day.                           |
 
 #### Output columns
 
@@ -534,7 +542,7 @@ Retrieves settlement prices for given list of derivative symbols:
 ```
 List<String> symbols = Arrays.asList("DBK.XE");
 
-SettlementPriceData prices = client.getSettlementPrices("ACTIV", symbols, "2016.10.04", "2016.11.04");
+SettlementPriceData prices = client.settlementPrices().source("ACTIV").symbols(symbols).firstDay("2016.10.04").lastDay("2017.10.04").fetch();
 ```
 
 #### Input parameters
@@ -571,16 +579,17 @@ Note searching by pattern and retrieval of basing reference data is possible via
 ```
 List<String> symbols = Arrays.asList("C/17Z.NL");
 
-ReferenceData referenceData = client.getReferenceData("ACTIV", symbols, "2016.09.01");
+ReferenceData referenceData = client.referenceData().source("ACTIV").symbols(symbols).day("2016.09.01").fetch();
 ```
 
 #### Input parameters
 
-| Parameter     | Type            | Required  | Description                                         |
-|---------------|-----------------|-----------|-----------------------------------------------------|
-| source        | String          | x         | Data source.                                        |
-| symbols       | List\<String\>  | x         | List of symbols.                                    |
-| day           | Date / String   | x         | Requested day.                                      |
+| Parameter      | Type            | Required  | Description                                         |
+|----------------|-----------------|-----------|-----------------------------------------------------|
+| source         | String          | x         | Data source.                                        |
+| symbols        | List\<String\>  | x         | List of symbols.                                    |
+| day            | Date / String   | x         | Requested day.                                      |
+| instrumentType | String          | x         | Type of the instrument.                             |
 
 #### Output columns
 
@@ -664,7 +673,7 @@ Retrieving instrument status:
 ```
 List<String> symbols = Arrays.asList("DBK.XE");
 
-InstrumentStatusData statuses = client.getInstrumentStatus("ACTIV", symbols, "2016.09.02");
+InstrumentStatusData statuses = client.instrumentStatus().source("ACTIV").symbols(symbols).day("2016.09.02").fetch();
 ```
 
 #### Input parameters
@@ -693,7 +702,7 @@ Retrieving tick rules:
 ```
 List<String> symbols = Arrays.asList("DBK.XE");
 
-TickRulesData tickRules = client.getTickRules("ACTIV", symbols, "2016.09.20");
+TickRulesData tickRules = client.tickRules().source("ACTIV").symbols(symbols).day("2016.09.20").fetch();
 ```
 
 #### Input parameters
@@ -720,19 +729,19 @@ Retrieves option or future chain for given chain identifier (either option stem 
 Retrieving option chain:
 
 ```
-ChainData result = client.getChain("ACTIV", "=DJX.W", "OPRA_COMPOSITE", "2017.08.15", ChainType.OPTIONS);
+ChainData result = client.chains().source("ACTIV").chain("=DJX.W").exchange("OPRA_COMPOSITE").day("2017.08.15").chainType(ChainType.OPTIONS).fetch();
 ```
 
 Retrieving future chain:
 
 ```
-ChainData chainMembers = client.getChain("ACTIV", "CL", "NYMEX", "2017.08.15", ChainType.FUTURES);
+ChainData chainMembers = client.chains().source("ACTIV").chain("CL").exchange("NYMEX").day("2017.08.15").chainType(ChainType.FUTURES).fetch();
 ```
 
 Retrieving future option chain:
 
 ```
-ChainData chainMembers = client.getChain("ACTIV", "CL", "NYMEX", "2017.08.15", ChainType.FUTURE_OPTIONS);
+ChainData chainMembers = client.chains().source("ACTIV").chain("CL").exchange("NYMEX").day("2017.08.15").chainType(ChainType.FUTURE_OPTIONS).fetch();
 ```
 
 
@@ -787,6 +796,19 @@ Output columns are dependent on the selected request.
 
 Troubleshooting
 ---------------
+
+### Diagnostics
+
+The library provides an utility function which collects diagnostic information about runtime environment and
+verifies basic connectivity with the API service:
+
+```
+XytHubClient client = XytHubClientBuilder.builder().withUsername(USERNAME).withPassword(PASSWORD).build();
+client.check(true);
+```
+
+Diagnostic information is printed to console and saved to a file (`xyt-java-VERSION-TIMESTAMP.info`).
+
 
 ### Proxies
 
