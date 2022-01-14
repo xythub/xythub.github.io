@@ -32,6 +32,13 @@ entries:
       url: /lib_lc_api_r.html
       output: web
 
+  - title: ETF Liquidity Cockpit API
+    output: web
+    folderitems:
+    - title: ETF LC API Python introduction
+      url: /lib_etf_lc_api_python.html
+      output: web
+
   - title: TCA API
     output: web
     folderitems:
