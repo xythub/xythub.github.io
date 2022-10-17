@@ -748,7 +748,7 @@ xythub.configure(username, password, ...)
 xythub.check()
 ```
 
-Diagnostic information is printed to console and saved to a file (`xyt-r-VERSION-TIMESTAMP.info`).
+Diagnostic information is printed to the console and saved to a file (`xyt-r-VERSION-TIMESTAMP.info`).
 
 ### Proxies
 

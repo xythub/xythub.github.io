@@ -807,7 +807,7 @@ XytHubClient client = XytHubClientBuilder.builder().withUsername(USERNAME).withP
 client.check(true);
 ```
 
-Diagnostic information is printed to console and saved to a file (`xyt-java-VERSION-TIMESTAMP.info`).
+Diagnostic information is printed to the console and saved to a file (`xyt-java-VERSION-TIMESTAMP.info`).
 
 
 ### Proxies

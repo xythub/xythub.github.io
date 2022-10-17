@@ -374,4 +374,386 @@ df.head(5)
 </tbody></table>
 
 
+```python
+query_params = {
+    'isins': ['IE00BJ5JMP33'],
+    'dateFrom': pd.Timestamp('2021-12-01'),
+    'dateTo': pd.Timestamp('2021-12-01'),
+	'currency': 'USD'
+}
+
+df = get(source='ETF-LC', endpoint='lcGetSpreads', **query_params).to_pandas()
+# Limit the number of rows to 5
+df.head(5)
+```
+
+#### Results
+
+<table border="1" class="dataframe">
+<thead><tr><th title="Field #1">group</th>
+<th title="Field #2">exchange</th>
+<th title="Field #3">date</th>
+<th title="Field #4">stock</th>
+<th title="Field #5">local_code</th>
+<th title="Field #6">isin</th>
+<th title="Field #7">currency</th>
+<th title="Field #8">symbol</th>
+<th title="Field #9">size</th>
+<th title="Field #10">spread_ask</th>
+<th title="Field #11">spread_bid</th>
+<th title="Field #12">spread_both</th>
+<th title="Field #13">fill_presence_ask</th>
+<th title="Field #14">fill_presence_bid</th>
+<th title="Field #15">fill_presence_both</th>
+<th title="Field #16">levels_ask</th>
+<th title="Field #17">levels_bid</th>
+<th title="Field #18">levels_both</th>
+<th title="Field #19">ob_presence_ask</th>
+<th title="Field #20">ob_presence_bid</th>
+<th title="Field #21">ob_presence_both</th>
+</tr></thead>
+<tbody><tr>
+<td>Cboe Europe</td>
+<td>Cboe CXE</td>
+<td>2021-12-01</td>
+<td>iShares Treasury Bond 01yr UCITS ETF MXN Hed Acc</td>
+<td>IB1MXx</td>
+<td>IE00BJ5JMP33</td>
+<td>MXN</td>
+<td>IB1MXx.CHIX</td>
+<td align="right">0</td>
+<td align="right">4.528241059</td>
+<td align="right">4.534529142</td>
+<td align="right">9.056482118</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+</tr>
+<tr>
+<td>Cboe Europe</td>
+<td>Cboe CXE</td>
+<td>2021-12-01</td>
+<td>iShares Treasury Bond 01yr UCITS ETF MXN Hed Acc</td>
+<td>IB1MXx</td>
+<td>IE00BJ5JMP33</td>
+<td>MXN</td>
+<td>IB1MXx.CHIX</td>
+<td align="right">5000</td>
+<td align="right">4.528241059</td>
+<td align="right">4.534529142</td>
+<td align="right">9.056482118</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+</tr>
+<tr>
+<td>Cboe Europe</td>
+<td>Cboe CXE</td>
+<td>2021-12-01</td>
+<td>iShares Treasury Bond 01yr UCITS ETF MXN Hed Acc</td>
+<td>IB1MXx</td>
+<td>IE00BJ5JMP33</td>
+<td>MXN</td>
+<td>IB1MXx.CHIX</td>
+<td align="right">10000</td>
+<td align="right">4.528241059</td>
+<td align="right">4.534529142</td>
+<td align="right">9.056482118</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+</tr>
+<tr>
+<td>Cboe Europe</td>
+<td>Cboe CXE</td>
+<td>2021-12-01</td>
+<td>iShares Treasury Bond 01yr UCITS ETF MXN Hed Acc</td>
+<td>IB1MXx</td>
+<td>IE00BJ5JMP33</td>
+<td>MXN</td>
+<td>IB1MXx.CHIX</td>
+<td align="right">25000</td>
+<td align="right">4.528241059</td>
+<td align="right">4.534529142</td>
+<td align="right">9.056482118</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+</tr>
+<tr>
+<td>Cboe Europe</td>
+<td>Cboe CXE</td>
+<td>2021-12-01</td>
+<td>iShares Treasury Bond 01yr UCITS ETF MXN Hed Acc</td>
+<td>IB1MXx</td>
+<td>IE00BJ5JMP33</td>
+<td>MXN</td>
+<td>IB1MXx.CHIX</td>
+<td align="right">100000</td>
+<td align="right">4.528241059</td>
+<td align="right">4.534529142</td>
+<td align="right">9.056482118</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+</tr>
+<tr>
+<td>Cboe Europe</td>
+<td>Cboe CXE</td>
+<td>2021-12-01</td>
+<td>iShares Treasury Bond 01yr UCITS ETF MXN Hed Acc</td>
+<td>IB1MXx</td>
+<td>IE00BJ5JMP33</td>
+<td>MXN</td>
+<td>IB1MXx.CHIX</td>
+<td align="right">250000</td>
+<td align="right">4.528241059</td>
+<td align="right">4.534529142</td>
+<td align="right">9.056482118</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+<td align="right">0.9984619012</td>
+</tr>
+<tr>
+<td>Cboe Europe</td>
+<td>Cboe CXE</td>
+<td>2021-12-01</td>
+<td>iShares Treasury Bond 01yr UCITS ETF MXN Hed Acc</td>
+<td>IB1MXx</td>
+<td>IE00BJ5JMP33</td>
+<td>MXN</td>
+<td>IB1MXx.CHIX</td>
+<td align="right">500000</td>
+<td align="right">29.33907886</td>
+<td align="right">30.04209554</td>
+<td align="right">59.28973290</td>
+<td align="right">0.986785750</td>
+<td align="right">0.986785750</td>
+<td align="right">0.986785750</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td align="right">0.986785750</td>
+<td align="right">0.986785750</td>
+<td align="right">0.986785750</td>
+</tr>
+
+</tbody></table>
+
+
+### 3.0. ETF reference data
+
+
+```python
+query_params = {
+    'date': pd.Timestamp('2021-12-04'),
+}
+
+df = get(source='ETF-LC', endpoint='lcETFRefData', **query_params).to_pandas()
+# Limit the number of rows to 5
+df.head(5)
+```
+
+#### Input parameters
+
+| Parameter              | Type                   | Required  | Description                                      |
+|------------------------|------------------------|-----------|--------------------------------------------------| 
+| date                   | pandas Timestamp       | True      | Date                                             |  
+
+#### Results
+<table border="1" class="dataframe">
+<thead><tr><th title="Field #1">benchmark_bloomberg_code</th>
+<th title="Field #2">benchmark_provider</th>
+<th title="Field #3">benchmark_short_name</th>
+<th title="Field #4">date</th>
+<th title="Field #5">exchange_bloomberg_code</th>
+<th title="Field #6">exchange_name</th>
+<th title="Field #7">exchange_reuters_code</th>
+<th title="Field #8">exchange_trading_currency</th>
+<th title="Field #9">fund_asset_class</th>
+<th title="Field #10">fund_asset_class_geo_focus</th>
+<th title="Field #11">fund_asset_sub_class</th>
+<th title="Field #12">fund_asset_sub_class_category</th>
+<th title="Field #13">fund_brand</th>
+<th title="Field #14">fund_currency</th>
+<th title="Field #15">fund_currency_hedged_indicator</th>
+<th title="Field #16">fund_domicile</th>
+<th title="Field #17">fund_income_treatment</th>
+<th title="Field #18">fund_isin</th>
+<th title="Field #19">fund_legal_structure</th>
+<th title="Field #20">fund_name</th>
+<th title="Field #21">fund_replication_type</th>
+<th title="Field #22">fund_ter</th>
+<th title="Field #23">fund_ucits</th>
+<th title="Field #24">fund_umbrella</th>
+</tr></thead>
+<tbody><tr>
+<td>SOFIX</td>
+<td>Bulgarian Stock Exchange</td>
+<td>SOFIX INDEX</td>
+<td>2021-12-04</td>
+<td>BGX BU</td>
+<td>BSE - Sofia</td>
+<td>BGX.BG</td>
+<td>BGX</td>
+<td>Equity</td>
+<td>Bulgaria</td>
+<td>Market Access</td>
+<td> </td>
+<td>Expat</td>
+<td>BGN</td>
+<td>NO</td>
+<td>Bulgaria</td>
+<td>Accumulating</td>
+<td>BG9000011163</td>
+<td>ETF</td>
+<td>EXPAT BULGARIA SOFIX UCITS ETF</td>
+<td>Physical</td>
+<td>1.00%</td>
+<td>YES</td>
+<td>Expat Asset Management</td>
+</tr>
+<tr>
+<td>SOFIX</td>
+<td>Bulgarian Stock Exchange</td>
+<td>SOFIX INDEX</td>
+<td>2021-12-04</td>
+<td>BGX GY</td>
+<td>Deutsche Borse - Xetra</td>
+<td>BGX.DE</td>
+<td>EUR</td>
+<td>Equity</td>
+<td>Bulgaria</td>
+<td>Market Access</td>
+<td> </td>
+<td>Expat</td>
+<td>BGN</td>
+<td>NO</td>
+<td>Bulgaria</td>
+<td>Accumulating</td>
+<td>BG9000011163</td>
+<td>ETF</td>
+<td>EXPAT BULGARIA SOFIX UCITS ETF</td>
+<td>Physical</td>
+<td>1.00%</td>
+<td>YES</td>
+<td>Expat Asset Management</td>
+</tr>
+<tr>
+<td>SOFIX</td>
+<td>Bulgarian Stock Exchange</td>
+<td>SOFIX INDEX</td>
+<td>2021-12-04</td>
+<td>BGX LN</td>
+<td>London Stock Exchange</td>
+<td>BGX.L</td>
+<td>EUR</td>
+<td>Equity</td>
+<td>Bulgaria</td>
+<td>Market Access</td>
+<td> </td>
+<td>Expat</td>
+<td>BGN</td>
+<td>NO</td>
+<td>Bulgaria</td>
+<td>Accumulating</td>
+<td>BG9000011163</td>
+<td>ETF</td>
+<td>EXPAT BULGARIA SOFIX UCITS ETF</td>
+<td>Physical</td>
+<td>1.00%</td>
+<td>YES</td>
+<td>Expat Asset Management</td>
+</tr>
+<tr>
+<td> </td>
+<td>Zagreb Stock Exchange</td>
+<td>CROBEX INDEX</td>
+<td>2021-12-04</td>
+<td>ECDC BU</td>
+<td>BSE - Sofia</td>
+<td>ECDC BU</td>
+<td>EUR</td>
+<td>Equity</td>
+<td>Croatia</td>
+<td>Market Access</td>
+<td> </td>
+<td>Expat</td>
+<td>EUR</td>
+<td>NO</td>
+<td>Bulgaria</td>
+<td>Accumulating</td>
+<td>BGCROEX03189</td>
+<td>ETF</td>
+<td>EXPAT CROATIA CROBEX UCITS ETF</td>
+<td>Physical</td>
+<td>1.00%</td>
+<td>YES</td>
+<td>Expat Asset Management</td>
+</tr>
+<tr>
+<td> </td>
+<td>Zagreb Stock Exchange</td>
+<td>CROBEX INDEX</td>
+<td>2021-12-04</td>
+<td>ECDC GY</td>
+<td>Deutsche Borse - Xetra</td>
+<td>ECDC.DE</td>
+<td>EUR</td>
+<td>Equity</td>
+<td>Croatia</td>
+<td>Market Access</td>
+<td> </td>
+<td>Expat</td>
+<td>EUR</td>
+<td>NO</td>
+<td>Bulgaria</td>
+<td>Accumulating</td>
+<td>BGCROEX03189</td>
+<td>ETF</td>
+<td>EXPAT CROATIA CROBEX UCITS ETF</td>
+<td>Physical</td>
+<td>1.00%</td>
+<td>YES</td>
+<td>Expat Asset Management</td>
+</tr>
+</tbody></table>
+
+
 {% include links.html %}

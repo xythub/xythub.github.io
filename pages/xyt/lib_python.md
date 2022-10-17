@@ -223,7 +223,7 @@ cursor = None
 rows = 0
 while continue_search:
     r = lookup_symbols(source="ACTIV", pattern='post', page_limit=100, cursor=cursor)
-    rows += r.rows
+    rows += r.row_count
     cursor = r.cursor
     print('%.2f%%  %s' % ((rows / r.total_hits) * 100, cursor))
     continue_search = cursor is not None
@@ -893,7 +893,7 @@ connection = XytClient.default()
 connection.check()
 ```
 
-Diagnostic information is printed to console and saved to a file (`xyt-py-VERSION-TIMESTAMP.info`).
+Diagnostic information is printed to the console and saved to a file (`xyt-py-VERSION-TIMESTAMP.info`).
 
 
 ### Protobuf generation

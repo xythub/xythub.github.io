@@ -818,7 +818,7 @@ var client = new XytHubClient(USERNAME, PASSWORD, ...);
 client.Check();
 ```
 
-Diagnostic information is printed to console and saved to a file (`xyt-csharp-VERSION-TIMESTAMP.info`).
+Diagnostic information is printed to the console and saved to a file (`xyt-csharp-VERSION-TIMESTAMP.info`).
 
 ### Proxies
 
