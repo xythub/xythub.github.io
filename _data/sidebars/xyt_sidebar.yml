@@ -1,0 +1,13 @@
+# This is your sidebar TOC. The sidebar code loops through sections here and provides the appropriate formatting.
+
+entries:
+- title: Contents
+  product: xyt
+  folders:
+
+  - title: Contact us
+    output: web
+    folderitems:
+    - title: Contact us
+      url: /contact_us.html
+      output: web
